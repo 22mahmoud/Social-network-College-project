@@ -3,6 +3,7 @@ import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resovlers";
 import typeDefs from "./graphql/schema";
 import constants from "./config/constants";
+import "./config/db";
 
 const options = {
   port: constants.PORT,
