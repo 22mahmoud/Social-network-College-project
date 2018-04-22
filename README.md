@@ -1,4 +1,4 @@
-# Social Network web application - Database class
+# Social Network web application - Database class 🎓
 
 social media networking web based application that involves the use of internet to connect users with their friends and family.
 
@@ -16,10 +16,10 @@ social media networking web based application that involves the use of internet 
 - [Typeorm](https://github.com/typeorm/typeorm)
 
 ## setup (server)
+
 ```bash
 > git clone https://github.com/22mahmoud/Social-network-College-project.git
 > cd server
 > yarn
 > yarn dev
 ```
-
