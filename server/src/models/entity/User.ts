@@ -1,12 +1,53 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  Column,
+  BaseEntity,
+  // PrimaryColumn,
+  BeforeInsert,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { hashSync, compareSync } from "bcrypt-nodejs";
+import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
+import * as jwt from "jsonwebtoken";
+
+import { Unique } from "../../helpers/uniqueUser.validate";
+import constants from "../../config/constants";
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
 
-  @Column() firstName: string;
+  @IsEmail()
+  @IsNotEmpty()
+  @Unique({
+    message: "$value already exists. Choose another email."
+  })
+  @Column({ type: "varchar", unique: true, length: "200" })
+  email: string;
 
-  @Column() lastName: string;
+  @IsNotEmpty()
+  @Column({ type: "varchar", length: "230" })
+  firstName: string;
 
-  @Column() age: number;
+  @IsNotEmpty()
+  @Column({ type: "varchar", length: "230" })
+  lastName: string;
+
+  @IsNotEmpty()
+  @MinLength(5)
+  @Column({ type: "text" })
+  password: string;
+
+  @BeforeInsert()
+  hashPassword() {
+    this.password = hashSync(this.password);
+  }
+
+  createToken() {
+    return jwt.sign({ id: this.id }, constants.JWT_SECRET);
+  }
+
+  authanticateUser(password) {
+    return compareSync(password, this.password);
+  }
 }

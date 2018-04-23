@@ -6,7 +6,7 @@
   "password": "root",
   "database": "social",
   "synchronize": true,
-  "logging": false,
+  "logging": "all",
   "entities": ["src/models/entity/**/*.ts"],
   "migrations": ["src/models/migration/**/*.ts"],
   "subscribers": ["src/models/subscriber/**/*.ts"],
