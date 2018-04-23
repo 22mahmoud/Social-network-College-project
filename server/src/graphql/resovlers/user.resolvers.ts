@@ -1,4 +1,3 @@
-import { ResolverMap } from "../../types/Resolvers.type";
 import { User } from "../../models/entity/User";
 import { validate } from "class-validator";
 
@@ -7,7 +6,7 @@ interface ErrorInterface {
   message: string;
 }
 
-const resolvers: ResolverMap = {
+export default {
   Query: {
     user: async (_, { id }) => {
       try {
@@ -103,5 +102,3 @@ const resolvers: ResolverMap = {
     }
   }
 };
-
-export default resolvers;

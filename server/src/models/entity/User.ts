@@ -4,7 +4,8 @@ import {
   BaseEntity,
   // PrimaryColumn,
   BeforeInsert,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  OneToMany
 } from "typeorm";
 import { hashSync, compareSync } from "bcrypt-nodejs";
 import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
@@ -12,6 +13,7 @@ import * as jwt from "jsonwebtoken";
 
 import { Unique } from "../../helpers/uniqueUser.validate";
 import constants from "../../config/constants";
+import { Post } from "./Post";
 
 @Entity()
 export class User extends BaseEntity {
@@ -37,6 +39,9 @@ export class User extends BaseEntity {
   @MinLength(5)
   @Column({ type: "text" })
   password: string;
+
+  @OneToMany(() => Post, post => post.user)
+  photos: Post[];
 
   @BeforeInsert()
   hashPassword() {
