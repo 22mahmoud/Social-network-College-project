@@ -4,8 +4,11 @@ import { User } from "../../models/entity/User";
 
 export default {
   Mutation: {
-    createPost: async (_, { userId, caption, imageUrl }) => {
+    createPost: async (_, { userId, caption, imageUrl }, ctx) => {
       try {
+        console.log("====================================");
+        console.log(ctx.user);
+        console.log("====================================");
         const user = await User.findOne(userId);
         const post = Post.create({ caption, imageUrl, user });
 

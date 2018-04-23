@@ -3,6 +3,7 @@ import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resovlers";
 import typeDefs from "./graphql/schema";
 import constants from "./config/constants";
+import permissions from "./graphql/middlewares/permissions";
 import "./config/db";
 
 const options = {
@@ -13,7 +14,9 @@ const options = {
 
 const server = new GraphQLServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: req => ({ ...req }),
+  middlewares: [permissions]
 });
 
 server.start(options, () =>
