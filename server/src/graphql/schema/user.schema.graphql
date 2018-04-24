@@ -5,9 +5,14 @@ type User {
   email: String!
 }
 
+type UserPayload {
+  isOk: Boolean!
+  user: User
+  errors: Error
+}
+
 type Query {
-  user(email: String!): User!
-  users: [User!]!
+  getUser(email: String!): User!
 }
 
 type AuthPayload {

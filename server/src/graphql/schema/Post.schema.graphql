@@ -18,5 +18,7 @@ type Query {
 }
 
 type Mutation {
-  createPost(imageUrl: String, caption: String!, userId: Int!): PostPayload!
+  createPost(imageUrl: String, caption: String!): PostPayload!
+  updatePost(imageUrl: String, caption: String, postId: Int!): PostPayload!
+  deletePost(postId: Int!): PostPayload!
 }

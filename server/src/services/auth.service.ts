@@ -17,7 +17,8 @@ export const isLoggedIn = async (resolve, _, __, ctx) => {
     if (!user) {
       throw new AuthError();
     }
-
+    
+    ctx.user = user;
     return resolve();
   } catch (error) {
     throw new AuthError();

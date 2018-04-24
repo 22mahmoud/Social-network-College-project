@@ -7,18 +7,21 @@ import {
   CreateDateColumn
 } from "typeorm";
 import { User } from "./User";
+import { IsNotEmpty } from "class-validator";
 
 @Entity()
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
 
-  @Column({ default: null })
+  @Column({ default: null, type: "varchar", length: "200" })
   imageUrl: string;
 
-  @Column() caption: string;
+  @IsNotEmpty()
+  @Column({ type: "varchar", length: "200" })
+  caption: string;
 
   @CreateDateColumn() createdAt: Date;
 
-  @ManyToOne(() => User, user => user.photos)
+  @ManyToOne(() => User, user => user.posts)
   user: User;
 }

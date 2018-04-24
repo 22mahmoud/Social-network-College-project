@@ -7,23 +7,36 @@ interface ErrorInterface {
 }
 
 export default {
+  // User: {
+  //   posts: async parent => {
+  //     const posts = await getConnection().
+
+  //   }
+  // },
+
   Query: {
-    user: async (_, { id }) => {
+    getUser: async (_, { email }) => {
       try {
-        const user = await User.findOne(id);
-        return user;
+        const user = await User.findOne({ email });
+        if (!user) {
+          return {
+            isOk: false,
+            errors: {
+              path: "user",
+              message: "user not found!"
+            }
+          };
+        }
+
+        return {
+          isOk: true,
+          user
+        };
       } catch (error) {
         console.error(error);
-        return;
-      }
-    },
-    users: async _ => {
-      try {
-        const users = await User.find();
-        return users;
-      } catch (error) {
-        console.error(error);
-        return;
+        return {
+          isOk: false
+        };
       }
     }
   },

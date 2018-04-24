@@ -41,7 +41,7 @@ export class User extends BaseEntity {
   password: string;
 
   @OneToMany(() => Post, post => post.user)
-  photos: Post[];
+  posts: Post[];
 
   @BeforeInsert()
   hashPassword() {
