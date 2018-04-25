@@ -14,6 +14,7 @@ import * as jwt from "jsonwebtoken";
 import { Unique } from "../../helpers/uniqueUser.validate";
 import constants from "../../config/constants";
 import { Post } from "./Post";
+import { FriendRequest } from "./FriendRequest";
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,6 +43,12 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Post, post => post.user)
   posts: Post[];
+
+  @OneToMany(_ => FriendRequest, friendrequest => friendrequest.sender)
+  requestsSent: FriendRequest[];
+
+  @OneToMany(_ => FriendRequest, friendrequest => friendrequest.receiver)
+  requestsReceived: FriendRequest[];
 
   @BeforeInsert()
   hashPassword() {

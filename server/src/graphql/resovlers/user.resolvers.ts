@@ -1,5 +1,7 @@
 import { User } from "../../models/entity/User";
 import { validate } from "class-validator";
+import { FriendRequest } from "../../models/entity/FriendRequest";
+import { getManager } from "typeorm";
 
 interface ErrorInterface {
   path: string;
@@ -111,6 +113,60 @@ export default {
         return {
           isOk: false
         };
+      }
+    },
+    sendFriendRequest: async (_, { userId }, ctx) => {
+      try {
+        if (ctx.user.id === userId) {
+          throw new Error();
+        }
+        const userToSend = await User.findOne(userId);
+        if (!userToSend) {
+          throw new Error();
+        }
+
+        const isExist = await getManager().query(
+          `SELECT *
+            FROM friend_request AS fq
+            WHERE ( fq.senderId = ? AND fq.receiverId = ? ) OR ( fq.senderId = ? AND fq.receiverId = ?  )
+          `,
+          [ctx.user.id, userId, userId, ctx.user.id]
+        );
+
+        if (isExist.length >= 1) {
+          throw new Error();
+        }
+
+        const friendRequest = FriendRequest.create({
+          receiver: userToSend,
+          sender: ctx.user
+        });
+        await friendRequest.save();
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+    acceptFriendRequest: async (_, { friendRequestId }, ctx) => {
+      try {
+        const friendRequest = await getManager()
+          .createQueryBuilder(FriendRequest, "fq")
+          .where("fq.id = :id", { id: friendRequestId })
+          .andWhere("fq.receiver = :receiver", { receiver: ctx.user.id })
+          .getOne();
+
+        if (!friendRequest) {
+          throw new Error();
+        }
+
+        friendRequest.isAccepted = true;
+        await friendRequest.save();
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
       }
     }
   }

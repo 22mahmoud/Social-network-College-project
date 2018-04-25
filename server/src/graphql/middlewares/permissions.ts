@@ -4,6 +4,8 @@ export default {
   Mutation: {
     createPost: isLoggedIn,
     updatePost: isLoggedIn,
-    deletePost: isLoggedIn
+    deletePost: isLoggedIn,
+    sendFriendRequest: isLoggedIn,
+    acceptFriendRequest: isLoggedIn
   }
 };

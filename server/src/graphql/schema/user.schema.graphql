@@ -32,4 +32,7 @@ type Mutation {
   ######
   updateUser(firstName: String, lastName: String, email: String, id: ID!): User!
   deleteUser(id: ID!): Boolean
+  ####
+  sendFriendRequest(userId: Int!): Boolean!
+  acceptFriendRequest(friendRequestId: Int!): Boolean!
 }
