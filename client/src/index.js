@@ -11,12 +11,12 @@ import App from './routes';
 
 import registerServiceWorker from './registerServiceWorker';
 // eslint-disable-next-line import/first
-import 'antd/dist/antd.css';
+import 'semantic-ui-css/semantic.min.css';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
-  request: async (operation) => {
-    const token = await localStorage.getItem('token');
+  request: (operation) => {
+    const token = localStorage.getItem('token');
     operation.setContext({
       headers: {
         Authorization: token,

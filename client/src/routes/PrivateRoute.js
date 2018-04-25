@@ -2,9 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Spin, Layout } from 'antd';
-
-const { Content } = Layout;
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 const MeQuery = gql`
   {
@@ -24,7 +22,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       <Query query={MeQuery}>
         {({ loading, error, data }) => {
           if (loading) {
-            return <Spin />;
+            return (
+              <Dimmer active inverted>
+                <Loader inverted content="Loading" />
+              </Dimmer>
+            );
           }
           if (error) {
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />;
