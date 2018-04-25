@@ -1,30 +1,37 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+// React
+import ReactDOM from 'react-dom';
+// Apollo
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+// React-Router
+import { BrowserRouter } from 'react-router-dom';
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import App from './routes';
 
-import App from "./App";
-
-import registerServiceWorker from "./registerServiceWorker";
+import registerServiceWorker from './registerServiceWorker';
+// eslint-disable-next-line import/first
+import 'antd/dist/antd.css';
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  request: async operation => {
-    const token = await localStorage.getItem("token");
+  uri: 'http://localhost:4000/graphql',
+  request: async (operation) => {
+    const token = await localStorage.getItem('token');
     operation.setContext({
       headers: {
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
-  }
+  },
 });
 
-const Application = _ => (
+const Application = () => (
   <ApolloProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </ApolloProvider>
 );
 
-ReactDOM.render(<Application />, document.getElementById("root"));
+ReactDOM.render(<Application />, document.getElementById('root'));
 registerServiceWorker();

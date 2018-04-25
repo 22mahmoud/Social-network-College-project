@@ -17,6 +17,14 @@ export default {
   // },
 
   Query: {
+    me: async (_, __, ctx) => {
+      if (!ctx.user) {
+        return;
+      }
+      const me = await User.findOne(ctx.user.id);
+      return me;
+    },
+    hello: _ => "Hell",
     getUser: async (_, { email }) => {
       try {
         const user = await User.findOne({ email });

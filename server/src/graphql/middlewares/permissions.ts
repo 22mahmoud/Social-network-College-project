@@ -7,5 +7,8 @@ export default {
     deletePost: isLoggedIn,
     sendFriendRequest: isLoggedIn,
     acceptFriendRequest: isLoggedIn
+  },
+  Query: {
+    me: isLoggedIn
   }
 };
