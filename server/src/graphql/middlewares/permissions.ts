@@ -9,6 +9,7 @@ export default {
     acceptFriendRequest: isLoggedIn
   },
   Query: {
-    me: isLoggedIn
+    me: isLoggedIn,
+    getUserPosts: isLoggedIn,
   }
 };

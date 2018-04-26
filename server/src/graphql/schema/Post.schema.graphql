@@ -15,6 +15,7 @@ type PostPayload {
 
 type Query {
   getPost(id: Int!): Post
+  getUserPosts(userId: Int!): [Post]!
 }
 
 type Mutation {

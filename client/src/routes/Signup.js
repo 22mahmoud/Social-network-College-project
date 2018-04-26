@@ -24,11 +24,11 @@ const Signup = ({ history }) => (
     onCompleted={(data) => {
       if (data && data.signup.isOk) {
         localStorage.setItem('token', data.signup.token);
-        history.push('/');
+        history.push('/feed');
       }
     }}
   >
-    {(signup, { data } = {}) => (
+    {(signup, data) => (
       <Formik
         initialValues={{
           email: '',

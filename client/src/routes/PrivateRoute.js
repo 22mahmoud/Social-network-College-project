@@ -31,7 +31,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
           if (error) {
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />;
           }
-          return <Component {...props} me={data} />;
+          return <Component {...props} me={data.me} />;
         }}
       </Query>
     )}

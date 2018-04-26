@@ -2,6 +2,22 @@ import { Post } from "../../models/entity/Post";
 import { getManager } from "typeorm";
 
 export default {
+  Query: {
+    getUserPosts: async (_, { userId }) => {
+      try {
+        const posts = await getManager()
+          .createQueryBuilder(Post, "post")
+          .select()
+          .where("post.user = :user", { user: userId })
+          .getMany();
+
+        return posts;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    }
+  },
   Mutation: {
     createPost: async (_, { caption, imageUrl }, ctx) => {
       try {

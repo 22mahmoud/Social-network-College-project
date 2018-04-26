@@ -37,7 +37,9 @@ export default {
             }
           };
         }
-
+        console.log("====================================");
+        console.log(user);
+        console.log("====================================");
         return {
           isOk: true,
           user

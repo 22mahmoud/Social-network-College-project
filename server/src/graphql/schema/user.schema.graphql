@@ -12,7 +12,7 @@ type UserPayload {
 }
 
 type Query {
-  getUser(email: String!): User!
+  getUser(email: String!): UserPayload!
   me: User!
   hello: String!
 }
