@@ -24,31 +24,83 @@ export default {
       const me = await User.findOne(ctx.user.id);
       return me;
     },
-    hello: _ => "Hell",
-    getUser: async (_, { email }) => {
+    getUser: async (_, { email }, ctx) => {
       try {
         const user = await User.findOne({ email });
         if (!user) {
           return {
-            isOk: false,
             errors: {
               path: "user",
               message: "user not found!"
             }
           };
         }
-        console.log("====================================");
-        console.log(user);
-        console.log("====================================");
+
+        const heSent = await getManager()
+          .createQueryBuilder(FriendRequest, "fq")
+          .select()
+          .where("fq.sender = :sender", { sender: user.id })
+          .andWhere("fq.receiver = :receiver", { receiver: ctx.user.id })
+          .getOne();
+
+        if (heSent) {
+          return {
+            ...user,
+            youSent: false,
+            heSent: true,
+            notYet: false
+          };
+        }
+
+        const youSent = await getManager()
+          .createQueryBuilder(FriendRequest, "fq")
+          .select()
+          .where("fq.sender = :sender", { sender: ctx.user.id })
+          .andWhere("fq.receiver = :receiver", { receiver: user.id })
+          .getOne();
+
+        if (youSent) {
+          return {
+            ...user,
+            youSent: true,
+            heSent: false,
+            notYet: false
+          };
+        }
+
         return {
-          isOk: true,
-          user
+          ...user,
+          youSent: false,
+          heSent: false,
+          notYet: true
         };
       } catch (error) {
         console.error(error);
-        return {
-          isOk: false
-        };
+        return;
+      }
+    },
+    getMyFriends: async (_, __, ctx) => {
+      try {
+        /*
+          Get My friend from Freind_request Table
+        */
+        const users = await getManager().query(
+          `SELECT *
+          FROM user u
+          INNER JOIN 
+          (
+          SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
+          FROM friend_request AS fq
+          WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
+          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
+          `,
+          [ctx.user.id, ctx.user.id, ctx.user.id]
+        );
+
+        return users;
+      } catch (error) {
+        console.error(error);
+        return;
       }
     }
   },

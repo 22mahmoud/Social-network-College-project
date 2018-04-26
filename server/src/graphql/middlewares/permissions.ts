@@ -11,5 +11,7 @@ export default {
   Query: {
     me: isLoggedIn,
     getUserPosts: isLoggedIn,
+    getMyFriends: isLoggedIn,
+    getUser: isLoggedIn
   }
 };

@@ -1,17 +1,20 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   BaseEntity,
-  CreateDateColumn
+  CreateDateColumn,
+  PrimaryColumn,
+  BeforeInsert
 } from "typeorm";
-import { User } from "./User";
 import { IsNotEmpty } from "class-validator";
+import uuidv4 from "uuid/v4";
+
+import { User } from "./User";
 
 @Entity()
 export class Post extends BaseEntity {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryColumn("uuid") id: string;
 
   @Column({ default: null, type: "varchar", length: "200" })
   imageUrl: string;
@@ -24,4 +27,9 @@ export class Post extends BaseEntity {
 
   @ManyToOne(() => User, user => user.posts)
   user: User;
+
+  @BeforeInsert()
+  addId() {
+    this.id = uuidv4();
+  }
 }

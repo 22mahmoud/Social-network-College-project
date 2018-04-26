@@ -1,15 +1,18 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   ManyToOne,
   BaseEntity,
-  Column
+  Column,
+  PrimaryColumn,
+  BeforeInsert
 } from "typeorm";
+import uuidv4 from "uuid/v4";
+
 import { User } from "./User";
 
 @Entity()
 export class FriendRequest extends BaseEntity {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryColumn() id: string;
 
   @ManyToOne(() => User, user => user.requestsSent)
   sender: User;
@@ -19,4 +22,9 @@ export class FriendRequest extends BaseEntity {
 
   @Column({ type: "tinyint", default: false })
   isAccepted: boolean;
+
+  @BeforeInsert()
+  addId() {
+    this.id = uuidv4();
+  }
 }

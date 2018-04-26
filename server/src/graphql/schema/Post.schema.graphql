@@ -1,7 +1,7 @@
 scalar Date
 
 type Post {
-  id: Int!
+  id: String!
   imageUrl: String
   caption: String
   createdAt: Date!
@@ -14,12 +14,12 @@ type PostPayload {
 }
 
 type Query {
-  getPost(id: Int!): Post
-  getUserPosts(userId: Int!): [Post]!
+  getPost(id: String!): Post
+  getUserPosts(userId: String!): [Post]!
 }
 
 type Mutation {
   createPost(imageUrl: String, caption: String!): PostPayload!
   updatePost(imageUrl: String, caption: String, postId: Int!): PostPayload!
-  deletePost(postId: Int!): PostPayload!
+  deletePost(postId: String!): PostPayload!
 }

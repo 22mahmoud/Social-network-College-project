@@ -4,12 +4,14 @@ import {
   BaseEntity,
   // PrimaryColumn,
   BeforeInsert,
-  PrimaryGeneratedColumn,
-  OneToMany
+  OneToMany,
+  PrimaryColumn,
+  BeforeUpdate
 } from "typeorm";
 import { hashSync, compareSync } from "bcrypt-nodejs";
 import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
 import * as jwt from "jsonwebtoken";
+import uuidv4 from "uuid/v4";
 
 import { Unique } from "../../helpers/uniqueUser.validate";
 import constants from "../../config/constants";
@@ -18,7 +20,7 @@ import { FriendRequest } from "./FriendRequest";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryColumn("uuid") id: string;
 
   @IsEmail()
   @IsNotEmpty()
@@ -50,9 +52,15 @@ export class User extends BaseEntity {
   @OneToMany(_ => FriendRequest, friendrequest => friendrequest.receiver)
   requestsReceived: FriendRequest[];
 
+  @BeforeUpdate()
   @BeforeInsert()
   hashPassword() {
     this.password = hashSync(this.password);
+  }
+
+  @BeforeInsert()
+  addId() {
+    this.id = uuidv4();
   }
 
   createToken() {

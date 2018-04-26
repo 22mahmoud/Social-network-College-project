@@ -1,18 +1,31 @@
 type User {
-  id: Int!
+  id: String!
   firstName: String!
   lastName: String!
   email: String!
 }
 
-type UserPayload {
-  isOk: Boolean!
-  user: User
+# type Friend {
+#   id: Int!
+#   firstName: String!
+#   lastName: String!
+#   email: String!
+# }
+
+type GetUserPayload {
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+  youSent: Boolean
+  heSent: Boolean
+  notYet: Boolean
   errors: Error
 }
 
 type Query {
-  getUser(email: String!): UserPayload!
+  getUser(email: String!): GetUserPayload!
+  getMyFriends: [User]!
   me: User!
   hello: String!
 }
@@ -32,9 +45,14 @@ type Mutation {
   ): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
   ######
-  updateUser(firstName: String, lastName: String, email: String, id: ID!): User!
-  deleteUser(id: ID!): Boolean
+  updateUser(
+    firstName: String
+    lastName: String
+    email: String
+    id: String!
+  ): User!
+  deleteUser(id: String!): Boolean
   ####
-  sendFriendRequest(userId: Int!): Boolean!
-  acceptFriendRequest(friendRequestId: Int!): Boolean!
+  sendFriendRequest(userId: String!): Boolean!
+  acceptFriendRequest(friendRequestId: String!): Boolean!
 }
