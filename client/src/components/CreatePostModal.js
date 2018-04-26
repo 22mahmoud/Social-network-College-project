@@ -82,7 +82,7 @@ export default withRouter(compose(
       } = res;
       if (isOk) {
         setSubmitting(false);
-        history.push('/');
+        history.push('/feed');
       }
     },
   }),

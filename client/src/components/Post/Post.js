@@ -1,26 +1,32 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { Feed, Icon } from 'semantic-ui-react';
+import { distanceInWordsToNow } from 'date-fns';
 
-const MY_POST_QUERY = gql`
-  query($userId: Int!) {
-    getUserPosts(userId: $userId) {
-      id
-      imageUrl
-      caption
-      createdAt
-    }
-  }
-`;
-const Posts = ({ userId }) => (
-  <Query query={MY_POST_QUERY} variables={{ userId }} pollInterval={200}>
-    {({ loading, error, data }) => {
-      if (loading) return 'Loading ...';
-      if (error) return 'Error';
+const Post = ({ user, post }) => (
+  <Feed.Event>
+    <Feed.Label image="https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg" />
+    <Feed.Content>
+      <Feed.Summary>
+        <a>{`${user.firstNauser}  ${user.lastName}`}</a>
+        <Feed.Date>{distanceInWordsToNow(post.createdAt)}</Feed.Date>
+      </Feed.Summary>
+      <Feed.Extra text>{post.caption}</Feed.Extra>
 
-      return data.getUserPosts.map(post => <h1 key={post.id}> {post.caption} </h1>);
-    }}
-  </Query>
+      {post.imageUrl && (
+        <Feed.Extra images>
+          <a>
+            <img alt="pic" src="https://react.semantic-ui.com/assets/images/wireframe/image.png" />
+          </a>
+        </Feed.Extra>
+      )}
+      <Feed.Meta>
+        <Feed.Like>
+          <Icon name="like" />
+          5 Likes
+        </Feed.Like>
+      </Feed.Meta>
+    </Feed.Content>
+  </Feed.Event>
 );
 
-export default Posts;
+export default Post;

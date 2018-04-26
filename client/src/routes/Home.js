@@ -5,7 +5,7 @@ import { Switch } from 'react-router-dom';
 
 import PrivateRoute from '../routes/PrivateRoute';
 import CreatePostModal from '../components/CreatePostModal';
-import Posts from '../components/Post/Post';
+import Posts from '../components/Post';
 import Search from '../components/Search';
 
 const Home = ({ history, me }) => {
@@ -58,14 +58,26 @@ const Home = ({ history, me }) => {
           />
         </Menu.Menu>
       </Menu>
-      <Switch>
-        <PrivateRoute exact path="/feed" component={props => <Posts {...props} userId={me.id} />} />
-        <PrivateRoute
-          exact
-          path="/search/:email"
-          component={props => <Search {...props} userId={me.id} />}
-        />
-      </Switch>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Switch>
+          <PrivateRoute
+            exact
+            path="/feed"
+            component={props => <Posts {...props} userId={me.id} />}
+          />
+          <PrivateRoute
+            exact
+            path="/search/:email"
+            component={props => <Search {...props} me={me} />}
+          />
+        </Switch>
+      </div>
     </React.Fragment>
   );
 };

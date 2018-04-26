@@ -2,16 +2,18 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const GET_USER_QUERY = gql`
+import SearchItem from './SearchItem';
+
+export const GET_USER_QUERY = gql`
   query($email: String!) {
     getUser(email: $email) {
-      isOk
-      user {
-        id
-        firstName
-        lastName
-        email
-      }
+      id
+      firstName
+      lastName
+      email
+      youSent
+      heSent
+      notYet
       errors {
         path
         message
@@ -21,23 +23,21 @@ const GET_USER_QUERY = gql`
 `;
 
 const Search = ({
+  me,
   match: {
     params: { email },
   },
 }) => (
-  <Query query={GET_USER_QUERY} variables={{ email }}>
+  <Query query={GET_USER_QUERY} variables={{ email }} pollInterval={100}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading';
       if (error) return 'Error';
 
-      const {
-        getUser: { errors, isOk, user },
-      } = data;
-      if (!isOk) {
-        return <h1> {errors.message} </h1>;
+      if (data.getUser.errors) {
+        return <h1> {data.getUser.errors.message} </h1>;
       }
 
-      return <h1> {user.firstName} </h1>;
+      return <SearchItem data={data.getUser} me={me} />;
     }}
   </Query>
 );
