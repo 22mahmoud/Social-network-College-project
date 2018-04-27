@@ -7,7 +7,7 @@ const Post = ({ user, post }) => (
     <Feed.Label image="https://react.semantic-ui.com/assets/images/avatar/small/jenny.jpg" />
     <Feed.Content>
       <Feed.Summary>
-        <a>{`${user.firstNauser}  ${user.lastName}`}</a>
+        <a>{`${user.firstName}  ${user.lastName}`}</a>
         <Feed.Date>{distanceInWordsToNow(post.createdAt)}</Feed.Date>
       </Feed.Summary>
       <Feed.Extra text>{post.caption}</Feed.Extra>

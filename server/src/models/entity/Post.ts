@@ -20,7 +20,7 @@ export class Post extends BaseEntity {
   imageUrl: string;
 
   @IsNotEmpty()
-  @Column({ type: "varchar", length: "200" })
+  @Column({ type: "text" })
   caption: string;
 
   @CreateDateColumn() createdAt: Date;

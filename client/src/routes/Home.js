@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Input, Form } from 'semantic-ui-react';
+import { Menu, Input, Form, Dropdown, Icon } from 'semantic-ui-react';
 import { ApolloConsumer } from 'react-apollo';
 import { Switch } from 'react-router-dom';
 
@@ -30,29 +30,37 @@ const Home = ({ history, me }) => {
             <Input ref={inputRef} className="icon" icon="search" placeholder="Search friends..." />
           </Form>
         </Menu.Item>
-        <Menu.Menu position="right">
-          <ApolloConsumer>
-            {client => (
-              <Menu.Item
-                name="logout"
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  client.resetStore();
-                  history.push('/login');
-                }}
-              >
-                logout
-              </Menu.Item>
-            )}
-          </ApolloConsumer>
 
-          <Menu.Item name onClick={() => {}}>
+        <Menu.Menu position="right">
+          <Dropdown item icon="setting" simple>
+            <Dropdown.Menu>
+              <Dropdown.Item>Friend Requests </Dropdown.Item>
+              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Divider />
+              <ApolloConsumer>
+                {client => (
+                  <Dropdown.Item
+                    name="logout"
+                    onClick={() => {
+                      localStorage.removeItem('token');
+                      client.resetStore();
+                      history.push('/login');
+                    }}
+                  >
+                    logout
+                  </Dropdown.Item>
+                )}
+              </ApolloConsumer>
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Menu.Item name="firstname" onClick={() => {}}>
             {me.firstName}
           </Menu.Item>
           <CreatePostModal
             trigger={
-              <Menu.Item onClick={() => {}} name="upcomingEvents">
-                Create a post
+              <Menu.Item onClick={() => {}} name="upcomingEvents" icon="plus">
+                <Icon name="add circle" />
               </Menu.Item>
             }
           />
@@ -68,7 +76,7 @@ const Home = ({ history, me }) => {
         <Switch>
           <PrivateRoute
             exact
-            path="/feed"
+            path="/"
             component={props => <Posts {...props} userId={me.id} />}
           />
           <PrivateRoute

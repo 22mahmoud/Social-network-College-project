@@ -14,6 +14,8 @@ export const GET_USER_QUERY = gql`
       youSent
       heSent
       notYet
+      friendRequestId
+      isFriend
       errors {
         path
         message
@@ -28,7 +30,7 @@ const Search = ({
     params: { email },
   },
 }) => (
-  <Query query={GET_USER_QUERY} variables={{ email }} pollInterval={100}>
+  <Query query={GET_USER_QUERY} variables={{ email }}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading';
       if (error) return 'Error';
@@ -37,7 +39,7 @@ const Search = ({
         return <h1> {data.getUser.errors.message} </h1>;
       }
 
-      return <SearchItem data={data.getUser} me={me} />;
+      return <SearchItem data={data.getUser} me={me} email={email} />;
     }}
   </Query>
 );

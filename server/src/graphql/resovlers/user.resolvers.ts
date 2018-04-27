@@ -36,42 +36,52 @@ export default {
           };
         }
 
-        const heSent = await getManager()
-          .createQueryBuilder(FriendRequest, "fq")
-          .select()
-          .where("fq.sender = :sender", { sender: user.id })
-          .andWhere("fq.receiver = :receiver", { receiver: ctx.user.id })
-          .getOne();
+        const [isFriendRequest] = await getManager().query(
+          `SELECT *
+          FROM friend_request AS fq
+          WHERE ( fq.senderId = ? AND fq.receiverId = ? ) OR ( fq.senderId = ? AND fq.receiverId = ?  )
+        `,
+          [ctx.user.id, user.id, user.id, ctx.user.id]
+        );
 
-        if (heSent) {
+        if (!isFriendRequest) {
           return {
             ...user,
-            youSent: false,
-            heSent: true,
-            notYet: false
+            notYet: true
           };
         }
 
-        const youSent = await getManager()
-          .createQueryBuilder(FriendRequest, "fq")
-          .select()
-          .where("fq.sender = :sender", { sender: ctx.user.id })
-          .andWhere("fq.receiver = :receiver", { receiver: user.id })
-          .getOne();
+        if (isFriendRequest.isAccepted === 1) {
+          return {
+            ...user,
+            isFriend: true
+          };
+        }
 
-        if (youSent) {
+        if (
+          isFriendRequest.isAccepted === 0 &&
+          isFriendRequest.senderId === ctx.user.id
+        ) {
           return {
             ...user,
             youSent: true,
-            heSent: false,
-            notYet: false
+            friendRequestId: isFriendRequest.id
+          };
+        }
+
+        if (
+          isFriendRequest.isAccepted === 0 &&
+          isFriendRequest.receiverId === ctx.user.id
+        ) {
+          return {
+            ...user,
+            heSent: true,
+            friendRequestId: isFriendRequest.id
           };
         }
 
         return {
           ...user,
-          youSent: false,
-          heSent: false,
           notYet: true
         };
       } catch (error) {
@@ -182,7 +192,7 @@ export default {
         if (ctx.user.id === userId) {
           throw new Error();
         }
-        const userToSend = await User.findOne(userId);
+        const userToSend = await User.findOne({ id: userId });
         if (!userToSend) {
           throw new Error();
         }

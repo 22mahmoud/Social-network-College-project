@@ -11,9 +11,16 @@ const SEND_FRRIEND_REQUEST_MUTATION = gql`
   }
 `;
 
+const ACCEPT_FRIEND_REQUEST_MUTATION = gql`
+  mutation($friendRequestId: String!) {
+    acceptFriendRequest(friendRequestId: $friendRequestId)
+  }
+`;
+
 const ItemExampleItems = ({
+  email: eQuery,
   data: {
-    email, firstName, heSent, id, lastName, notYet, youSent,
+    email, firstName, heSent, id, lastName, notYet, youSent, friendRequestId, isFriend,
   },
   me,
 }) => (
@@ -28,12 +35,32 @@ const ItemExampleItems = ({
           {firstName} {lastName}
         </Item.Header>
         <Item.Description>{email}</Item.Description>
-        {id !== me.id ? (
+        {id !== me.id || isFriend ? (
           <ApolloConsumer>
             {client => (
               <Item.Extra>
                 {heSent && (
-                  <Button onClick={() => {}} floated="right">
+                  <Button
+                    onClick={() => {
+                      client.mutate({
+                        mutation: ACCEPT_FRIEND_REQUEST_MUTATION,
+                        variables: { friendRequestId },
+                        update: (cache, { data: { acceptFriendRequest } }) => {
+                          const { getUser } = cache.readQuery({
+                            query: GET_USER_QUERY,
+                            variables: { email: eQuery },
+                          });
+                          cache.writeQuery({
+                            query: GET_USER_QUERY,
+                            data: {
+                              getUser: { ...getUser, heSent: false, isFriend: acceptFriendRequest },
+                            },
+                          });
+                        },
+                      });
+                    }}
+                    floated="right"
+                  >
                     Accept friend request
                   </Button>
                 )}
@@ -48,6 +75,22 @@ const ItemExampleItems = ({
                       client.mutate({
                         mutation: SEND_FRRIEND_REQUEST_MUTATION,
                         variables: { userId: id },
+                        // optimisticResponse: {
+                        //   __typename: 'Mutation',
+                        //   sendFriendRequest: true,
+                        // },
+                        update: (cache, { data: { sendFriendRequest } }) => {
+                          const { getUser } = cache.readQuery({
+                            query: GET_USER_QUERY,
+                            variables: { email: eQuery },
+                          });
+                          cache.writeQuery({
+                            query: GET_USER_QUERY,
+                            data: {
+                              getUser: { ...getUser, notYet: false, youSent: sendFriendRequest },
+                            },
+                          });
+                        },
                       });
                     }}
                     floated="right"

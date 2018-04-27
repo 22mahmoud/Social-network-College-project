@@ -20,6 +20,8 @@ type GetUserPayload {
   youSent: Boolean
   heSent: Boolean
   notYet: Boolean
+  friendRequestId: String
+  isFriend: Boolean
   errors: Error
 }
 

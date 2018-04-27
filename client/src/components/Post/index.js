@@ -16,7 +16,7 @@ const MY_POST_QUERY = gql`
   }
 `;
 const Posts = ({ me }) => (
-  <Query query={MY_POST_QUERY} variables={{ userId: me.id }} pollInterval={200}>
+  <Query query={MY_POST_QUERY} variables={{ userId: me.id }}>
     {({ loading, error, data }) => {
       if (loading) return 'Loading ...';
       if (error) return 'Error';
