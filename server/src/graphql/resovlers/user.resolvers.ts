@@ -24,6 +24,26 @@ export default {
       const me = await User.findOne(ctx.user.id);
       return me;
     },
+
+    getMyFriendRequests: async (_, __, ctx) => {
+      try {
+        const friendRequets = await getManager()
+          .createQueryBuilder(FriendRequest, "fq")
+          .innerJoinAndSelect(
+            "fq.sender",
+            "sender",
+            "fq.isAccepted = :isAccepted",
+            { isAccepted: 0 }
+          )
+          .where("fq.receiver = :receiver", { receiver: ctx.user.id })
+          .getMany();
+
+        return friendRequets;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    },
     getUser: async (_, { email }, ctx) => {
       try {
         const user = await User.findOne({ email });

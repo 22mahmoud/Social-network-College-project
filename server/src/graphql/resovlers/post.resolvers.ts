@@ -16,6 +16,11 @@ export default {
         console.error(error);
         return;
       }
+    },
+    getMyFriendsPosts: async (_, __, ctx) => {
+      console.log("====================================");
+      console.log(ctx);
+      console.log("====================================");
     }
   },
   Mutation: {

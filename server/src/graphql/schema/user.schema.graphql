@@ -5,13 +5,6 @@ type User {
   email: String!
 }
 
-# type Friend {
-#   id: Int!
-#   firstName: String!
-#   lastName: String!
-#   email: String!
-# }
-
 type GetUserPayload {
   id: String
   firstName: String
@@ -25,9 +18,15 @@ type GetUserPayload {
   errors: Error
 }
 
+type FriendRequest {
+  id: String
+  sender: User
+}
+
 type Query {
   getUser(email: String!): GetUserPayload!
   getMyFriends: [User]!
+  getMyFriendRequests: [FriendRequest]!
   me: User!
   hello: String!
 }

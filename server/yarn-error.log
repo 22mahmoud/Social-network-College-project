@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js de
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
 
 PATH: 
   C:\Users\Mahmoud\Downloads\Compressed\cmder\bin;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5\ConEmu;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk-9\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;"C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk-9\bin";F:\Programming\xampp\php;C:\composer;C:\Program Files\erl9.0\bin;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\Elixir/bin;C:\Program Files\PostgreSQL\10\bin;C:\Program Files\PostgreSQL\10\bin;C:\Users\Mahmoud\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files\Git\bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Amazon\AWSCLI\;C:\Users\Mahmoud\flutter\flutter\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\R\R-3.4.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Program Files (x86)\Yarn\bin;C:\Users\Mahmoud;C:\Users\Mahmoud\.cargo\bin;C:\Program Files (x86)\Elm Platform\0.18\bin;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32\;C:\Users\Mahmoud\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-9\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\Mahmoud\AppData\Roaming\Composer\vendor\bin;C:\Program Files\erl9.0\bin;C:\Users\Mahmoud\AppData\Roaming\npm;C:\Users\Mahmoud\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files\Git\bin;C:\tools\dart-sdk\bin;C:\Users\Mahmoud\AppData\Roaming\Pub\Cache\bin;C:\Program Files\Heroku\bin;C:\Users\Mahmoud\AppData\Local\Android\Sdk\platform-tools;C:\Users\Mahmoud\AppData\Local\Yarn\bin;C:\Program Files\R\R-3.4.4\bin;C:\Program Files (x86)\Oni;F:\Programming\xampp\mysql\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Local\hyper\app-2.0.0\resources\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Users\Mahmoud\Downloads\Compressed\cmder\
@@ -20,7 +20,7 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/index.ts"
+      "dev": "nodemon --exec ts-node src/index.ts"
     },
     "devDependencies": {
       "@types/node": "^8.0.29",
@@ -34,12 +34,13 @@ npm manifest:
     "dependencies": {
       "bcrypt-nodejs": "^0.0.3",
       "class-validator": "^0.8.5",
-      "cross-env": "^5.1.4",
       "graphql-yoga": "^1.8.5",
+      "jsonwebtoken": "^8.2.1",
       "merge-graphql-schemas": "^1.5.1",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.0"
+      "typeorm": "0.2.0",
+      "uuid": "^3.2.1"
     }
   }
 
@@ -52,22 +53,28 @@ Lockfile:
   
   
   "@babel/runtime@^7.0.0-beta.40":
-    version "7.0.0-beta.44"
-    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.44.tgz#ea5ad6c6fe9a2c1187b025bf42424d28050ee696"
+    version "7.0.0-beta.46"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
     dependencies:
       core-js "^2.5.3"
       regenerator-runtime "^0.11.1"
   
   "@types/body-parser@*":
-    version "1.16.8"
-    resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.16.8.tgz#687ec34140624a3bec2b1a8ea9268478ae8f3be3"
+    version "1.17.0"
+    resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.17.0.tgz#9f5c9d9bd04bb54be32d5eb9fc0d8c974e6cf58c"
     dependencies:
-      "@types/express" "*"
+      "@types/connect" "*"
       "@types/node" "*"
   
-  "@types/cors@^2.8.3":
-    version "2.8.3"
-    resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.3.tgz#eaf6e476da0d36bee6b061a24d57e343ddce86d6"
+  "@types/connect@*":
+    version "3.4.32"
+    resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
+    dependencies:
+      "@types/node" "*"
+  
+  "@types/cors@^2.8.4":
+    version "2.8.4"
+    resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.4.tgz#50991a759a29c0b89492751008c6af7a7c8267b0"
     dependencies:
       "@types/express" "*"
   
@@ -103,12 +110,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
   
   "@types/node@*":
-    version "9.6.6"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.6.tgz#439b91f9caf3983cad2eef1e11f6bedcbf9431d2"
+    version "10.0.0"
+    resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.0.tgz#c40f8e07dce607d3ef25a626b93a6a7cdcf97881"
   
   "@types/node@^8.0.29":
-    version "8.10.9"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.9.tgz#b507a74a7d3eddc74a17dc35fd40d8f45dde0d6c"
+    version "8.10.10"
+    resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.10.tgz#fec07bc2ad549d9e6d2f7aa0fb0be3491b83163a"
   
   "@types/serve-static@*":
     version "1.13.1"
@@ -188,26 +195,26 @@ Lockfile:
       apollo-utilities "^1.0.0"
       zen-observable-ts "^0.8.9"
   
-  apollo-server-core@^1.3.4, apollo-server-core@^1.3.5:
-    version "1.3.5"
-    resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.3.5.tgz#36da3a6ee52b92fc4bb5710d44ced6b8fafebe2d"
+  apollo-server-core@^1.3.6:
+    version "1.3.6"
+    resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.3.6.tgz#08636243c2de56fa8c267d68dd602cb1fbd323e3"
     dependencies:
       apollo-cache-control "^0.1.0"
       apollo-tracing "^0.1.0"
       graphql-extensions "^0.0.x"
   
-  apollo-server-express@^1.3.4:
-    version "1.3.5"
-    resolved "https://registry.yarnpkg.com/apollo-server-express/-/apollo-server-express-1.3.5.tgz#7cd010f7921356cd9b832032828aa0add36cb7ed"
+  apollo-server-express@^1.3.6:
+    version "1.3.6"
+    resolved "https://registry.yarnpkg.com/apollo-server-express/-/apollo-server-express-1.3.6.tgz#2120b05021a87def44fafd846e8a0e2a32852db7"
     dependencies:
-      apollo-server-core "^1.3.5"
+      apollo-server-core "^1.3.6"
       apollo-server-module-graphiql "^1.3.4"
   
-  apollo-server-lambda@1.3.4:
-    version "1.3.4"
-    resolved "https://registry.yarnpkg.com/apollo-server-lambda/-/apollo-server-lambda-1.3.4.tgz#fc168891e0034e2884f259b573f6ed208abc2fc2"
+  apollo-server-lambda@1.3.6:
+    version "1.3.6"
+    resolved "https://registry.yarnpkg.com/apollo-server-lambda/-/apollo-server-lambda-1.3.6.tgz#bdaac37f143c6798e40b8ae75580ba673cea260e"
     dependencies:
-      apollo-server-core "^1.3.4"
+      apollo-server-core "^1.3.6"
       apollo-server-module-graphiql "^1.3.4"
   
   apollo-server-module-graphiql@^1.3.4:
@@ -302,8 +309,8 @@ Lockfile:
       dotenv "^0.4.0"
   
   aws-sdk@^*:
-    version "2.226.1"
-    resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.226.1.tgz#8e6e2b466aaf26cb35714905d5f934e6c8317a99"
+    version "2.229.1"
+    resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.229.1.tgz#6123c8acee0de534a0585e1375ee19c4de54a39e"
     dependencies:
       buffer "4.9.1"
       events "1.1.1"
@@ -336,6 +343,10 @@ Lockfile:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
   
+  base64url@2.0.0, base64url@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/base64url/-/base64url-2.0.0.tgz#eac16e03ea1438eff9423d69baa36262ed1f70bb"
+  
   base@^0.11.1:
     version "0.11.2"
     resolved "https://registry.yarnpkg.com/base/-/base-0.11.2.tgz#7bde5ced145b6d551a90db87f83c558b4eb48a8f"
@@ -360,9 +371,9 @@ Lockfile:
     version "1.11.0"
     resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.11.0.tgz#46aa1751fb6a2f93ee5e689bb1087d4b14c6c205"
   
-  body-parser-graphql@1.0.0:
-    version "1.0.0"
-    resolved "https://registry.yarnpkg.com/body-parser-graphql/-/body-parser-graphql-1.0.0.tgz#997de1792ed222cbc4845d404f4549eb88ec6d37"
+  body-parser-graphql@1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/body-parser-graphql/-/body-parser-graphql-1.1.0.tgz#80a80353c7cb623562fd375750dfe018d75f0f7c"
     dependencies:
       body-parser "^1.18.2"
   
@@ -414,6 +425,14 @@ Lockfile:
       snapdragon-node "^2.0.1"
       split-string "^3.0.2"
       to-regex "^3.0.1"
+  
+  buffer-equal-constant-time@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
+  
+  buffer-from@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.0.0.tgz#4cb8832d23612589b0406e9e2956c17f06fdf531"
   
   buffer@4.9.1:
     version "4.9.1"
@@ -477,9 +496,17 @@ Lockfile:
       strip-ansi "^3.0.0"
       supports-color "^2.0.0"
   
-  chalk@^2.0.1, chalk@^2.3.0, chalk@^2.3.2:
+  chalk@^2.0.1, chalk@^2.3.2:
     version "2.4.0"
     resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.0.tgz#a060a297a6b57e15b61ca63ce84995daa0fe6e52"
+    dependencies:
+      ansi-styles "^3.2.1"
+      escape-string-regexp "^1.0.5"
+      supports-color "^5.3.0"
+  
+  chalk@^2.3.0:
+    version "2.4.1"
+    resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
     dependencies:
       ansi-styles "^3.2.1"
       escape-string-regexp "^1.0.5"
@@ -637,13 +664,6 @@ Lockfile:
     dependencies:
       capture-stack-trace "^1.0.0"
   
-  cross-env@^5.1.4:
-    version "5.1.4"
-    resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.4.tgz#f61c14291f7cc653bb86457002ea80a04699d022"
-    dependencies:
-      cross-spawn "^5.1.0"
-      is-windows "^1.0.0"
-  
   cross-fetch@2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.0.0.tgz#a17475449561e0f325146cea636a8619efb9b382"
@@ -651,7 +671,7 @@ Lockfile:
       node-fetch "2.0.0"
       whatwg-fetch "2.0.3"
   
-  cross-spawn@^5.0.1, cross-spawn@^5.1.0:
+  cross-spawn@^5.0.1:
     version "5.1.0"
     resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
     dependencies:
@@ -766,6 +786,13 @@ Lockfile:
   duplexer@~0.1.1:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
+  
+  ecdsa-sig-formatter@1.0.9:
+    version "1.0.9"
+    resolved "https://registry.yarnpkg.com/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.9.tgz#4bc926274ec3b5abb5016e7e1d60921ac262b2a1"
+    dependencies:
+      base64url "^2.0.0"
+      safe-buffer "^5.0.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -1063,8 +1090,8 @@ Lockfile:
       lodash "^4.17.4"
   
   graphql-import@^0.5.0:
-    version "0.5.0"
-    resolved "https://registry.yarnpkg.com/graphql-import/-/graphql-import-0.5.0.tgz#5f678a6d4636d02a829308884aa1f2fa2197f06d"
+    version "0.5.2"
+    resolved "https://registry.yarnpkg.com/graphql-import/-/graphql-import-0.5.2.tgz#d7e05dc07d2d66e8d8c4bd408650f9fdaeddb8f8"
     dependencies:
       lodash "^4.17.4"
   
@@ -1086,9 +1113,9 @@ Lockfile:
     dependencies:
       graphql-playground-html "1.5.5"
   
-  graphql-playground-middleware-lambda@1.5.0:
-    version "1.5.0"
-    resolved "https://registry.yarnpkg.com/graphql-playground-middleware-lambda/-/graphql-playground-middleware-lambda-1.5.0.tgz#41a06faf185103660a324257c5293e9f50839fce"
+  graphql-playground-middleware-lambda@1.5.1:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/graphql-playground-middleware-lambda/-/graphql-playground-middleware-lambda-1.5.1.tgz#ebe48d421490e12ba27872fc1ffb275eade9c0a3"
     dependencies:
       graphql-playground-html "1.5.5"
   
@@ -1115,28 +1142,28 @@ Lockfile:
       uuid "^3.1.0"
   
   graphql-yoga@^1.8.5:
-    version "1.9.1"
-    resolved "https://registry.yarnpkg.com/graphql-yoga/-/graphql-yoga-1.9.1.tgz#1e83ac8d4c262cc28397f6b21acd7d894bcf1f4c"
+    version "1.12.1"
+    resolved "https://registry.yarnpkg.com/graphql-yoga/-/graphql-yoga-1.12.1.tgz#75959677f7fa9b391eb878fef64306ff346d0a7a"
     dependencies:
-      "@types/cors" "^2.8.3"
+      "@types/cors" "^2.8.4"
       "@types/express" "^4.11.1"
       "@types/graphql" "^0.13.0"
       "@types/zen-observable" "^0.5.3"
-      apollo-server-express "^1.3.4"
-      apollo-server-lambda "1.3.4"
+      apollo-server-express "^1.3.6"
+      apollo-server-lambda "1.3.6"
       apollo-upload-server "^5.0.0"
       aws-lambda "^0.1.2"
-      body-parser-graphql "1.0.0"
+      body-parser-graphql "1.1.0"
       cors "^2.8.4"
       express "^4.16.3"
       graphql "^0.11.0 || ^0.12.0 || ^0.13.0"
       graphql-import "^0.5.0"
       graphql-middleware "^1.1.0"
       graphql-playground-middleware-express "1.6.1"
-      graphql-playground-middleware-lambda "1.5.0"
+      graphql-playground-middleware-lambda "1.5.1"
       graphql-subscriptions "^0.5.8"
       graphql-tools "^2.23.1"
-      subscriptions-transport-ws "^0.9.7"
+      subscriptions-transport-ws "^0.9.8"
   
   "graphql@^0.11.0 || ^0.12.0 || ^0.13.0":
     version "0.13.2"
@@ -1413,7 +1440,7 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
   
-  is-windows@^1.0.0, is-windows@^1.0.2:
+  is-windows@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
   
@@ -1458,6 +1485,38 @@ Lockfile:
       argparse "^1.0.7"
       esprima "^4.0.0"
   
+  jsonwebtoken@^8.2.1:
+    version "8.2.1"
+    resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.2.1.tgz#333ee39aa8f238f32fa41693e7a2fb7e42f82b31"
+    dependencies:
+      jws "^3.1.4"
+      lodash.includes "^4.3.0"
+      lodash.isboolean "^3.0.3"
+      lodash.isinteger "^4.0.4"
+      lodash.isnumber "^3.0.3"
+      lodash.isplainobject "^4.0.6"
+      lodash.isstring "^4.0.1"
+      lodash.once "^4.0.0"
+      ms "^2.1.1"
+      xtend "^4.0.1"
+  
+  jwa@^1.1.4:
+    version "1.1.5"
+    resolved "https://registry.yarnpkg.com/jwa/-/jwa-1.1.5.tgz#a0552ce0220742cd52e153774a32905c30e756e5"
+    dependencies:
+      base64url "2.0.0"
+      buffer-equal-constant-time "1.0.1"
+      ecdsa-sig-formatter "1.0.9"
+      safe-buffer "^5.0.1"
+  
+  jws@^3.1.4:
+    version "3.1.4"
+    resolved "https://registry.yarnpkg.com/jws/-/jws-3.1.4.tgz#f9e8b9338e8a847277d6444b1464f61880e050a2"
+    dependencies:
+      base64url "^2.0.0"
+      jwa "^1.1.4"
+      safe-buffer "^5.0.1"
+  
   kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
     version "3.2.2"
     resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -1501,17 +1560,41 @@ Lockfile:
     version "4.2.0"
     resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
   
+  lodash.includes@^4.3.0:
+    version "4.3.0"
+    resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+  
+  lodash.isboolean@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
+  
+  lodash.isinteger@^4.0.4:
+    version "4.0.4"
+    resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
+  
+  lodash.isnumber@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz#3ce76810c5928d03352301ac287317f11c0b1ffc"
+  
   lodash.isobject@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
+  
+  lodash.isplainobject@^4.0.6:
+    version "4.0.6"
+    resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
   
   lodash.isstring@^4.0.1:
     version "4.0.1"
     resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
   
+  lodash.once@^4.0.0:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
+  
   lodash@^4.0.0, lodash@^4.17.4:
-    version "4.17.5"
-    resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+    version "4.17.10"
+    resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   
   lowercase-keys@^1.0.0:
     version "1.0.1"
@@ -1653,6 +1736,10 @@ Lockfile:
   ms@2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+  
+  ms@^2.1.1:
+    version "2.1.1"
+    resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   
   mysql@^2.14.1:
     version "2.15.0"
@@ -2118,9 +2205,13 @@ Lockfile:
     dependencies:
       glob "^7.0.5"
   
-  safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+  safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.1:
     version "5.1.1"
     resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+  
+  safe-buffer@~5.1.0:
+    version "5.1.2"
+    resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   
   safe-regex@^1.1.0:
     version "1.1.0"
@@ -2263,9 +2354,10 @@ Lockfile:
       urix "^0.1.0"
   
   source-map-support@^0.5.1, source-map-support@^0.5.3:
-    version "0.5.4"
-    resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.4.tgz#54456efa89caa9270af7cd624cc2f123e51fbae8"
+    version "0.5.5"
+    resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.5.tgz#0d4af9e00493e855402e8ec36ebed2d266fceb90"
     dependencies:
+      buffer-from "^1.0.0"
       source-map "^0.6.0"
   
   source-map-url@^0.4.0:
@@ -2376,7 +2468,7 @@ Lockfile:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   
-  subscriptions-transport-ws@^0.9.7:
+  subscriptions-transport-ws@^0.9.8:
     version "0.9.8"
     resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.9.8.tgz#3a26ab96e06f78cf4ace8d083f6227fa55970947"
     dependencies:
@@ -2470,8 +2562,8 @@ Lockfile:
       nopt "~1.0.10"
   
   ts-node@^6.0.0:
-    version "6.0.0"
-    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.0.0.tgz#46c25f8498593a9248eeea16906f1598fa098140"
+    version "6.0.1"
+    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.0.1.tgz#e2dd65abcadae530d2b2109cfd19202ba9f90402"
     dependencies:
       arrify "^1.0.0"
       chalk "^2.3.0"
@@ -2636,7 +2728,7 @@ Lockfile:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
   
-  uuid@^3.1.0:
+  uuid@^3.1.0, uuid@^3.2.1:
     version "3.2.1"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
   
@@ -2729,6 +2821,10 @@ Lockfile:
     version "9.0.7"
     resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
   
+  xtend@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+  
   y18n@^3.2.1:
     version "3.2.1"
     resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
@@ -2810,14 +2906,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.8.tgz#1ea93995bf098754a58215a1e0a7309e5749ec42"
 
 Trace: 
-  Error: Command "de" not found. Did you mean "dev"?
-      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:87307:17
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (C:\Program Files (x86)\Yarn\lib\cli.js:23451:28)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:95:12
-      at runCommand (C:\Program Files (x86)\Yarn\lib\cli.js:87312:22)
-      at Object.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:87412:14)
+  Error: Command failed.
+  Exit code: 3221225786
+  Command: C:\Windows\system32\cmd.exe
+  Arguments: /d /s /c nodemon --exec ts-node src/index.ts
+  Directory: F:\Programming\Projects\social-network-database-class\server
+  Output:
+  
+      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
+      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
+      at ChildProcess.emit (events.js:159:13)
+      at maybeClose (internal/child_process.js:943:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)

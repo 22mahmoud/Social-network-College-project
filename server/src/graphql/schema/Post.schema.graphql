@@ -16,6 +16,7 @@ type PostPayload {
 type Query {
   getPost(id: String!): Post
   getUserPosts(userId: String!): [Post]!
+  getMyFriendsPosts: [Post]!
 }
 
 type Mutation {
