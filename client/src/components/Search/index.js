@@ -30,18 +30,30 @@ const Search = ({
     params: { email },
   },
 }) => (
-  <Query query={GET_USER_QUERY} variables={{ email }}>
-    {({ loading, error, data }) => {
-      if (loading) return 'Loading';
-      if (error) return 'Error';
-
-      if (data.getUser.errors) {
-        return <h1> {data.getUser.errors.message} </h1>;
-      }
-
-      return <SearchItem data={data.getUser} me={me} email={email} />;
+  <div
+    style={{
+      gridColumn: '2/5',
+      display: 'flex',
+      justifyContent: 'center',
+      background: '#fff',
+      width: '100%',
+      padding: '80px',
+      borderRadius: '10px',
     }}
-  </Query>
+  >
+    <Query query={GET_USER_QUERY} variables={{ email }}>
+      {({ loading, error, data }) => {
+        if (loading) return 'Loading';
+        if (error) return 'Error';
+
+        if (data.getUser.errors) {
+          return <h1> {data.getUser.errors.message} </h1>;
+        }
+
+        return <SearchItem data={data.getUser} me={me} email={email} />;
+      }}
+    </Query>
+  </div>
 );
 
 export default Search;

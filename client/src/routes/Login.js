@@ -24,7 +24,7 @@ const Login = ({ history }) => (
     onCompleted={({ login: { isOk, token } }) => {
       if (isOk) {
         localStorage.setItem('token', token);
-        history.push('/feed');
+        history.push('/');
       }
     }}
   >

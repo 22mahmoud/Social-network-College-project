@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, Button } from 'semantic-ui-react';
+import { Item, Button, Card, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { ApolloConsumer } from 'react-apollo';
 
@@ -24,21 +24,21 @@ const ItemExampleItems = ({
   },
   me,
 }) => (
-  <Item.Group relaxed>
-    <Item>
-      <Item.Image
-        size="tiny"
-        src="https://react.semantic-ui.com/assets/images/wireframe/image.png"
-      />
-      <Item.Content>
-        <Item.Header as="a">
+  <Card.Group>
+    <Card>
+      <Card.Content>
+        <Image floated="right" size="mini" src={`https://api.adorable.io/avatars/132/${id}.png`} />
+        <Card.Header>
           {firstName} {lastName}
-        </Item.Header>
-        <Item.Description>{email}</Item.Description>
-        {id !== me.id || isFriend ? (
-          <ApolloConsumer>
-            {client => (
-              <Item.Extra>
+        </Card.Header>
+        <Card.Meta>{email}</Card.Meta>
+      </Card.Content>
+
+      {id !== me.id || isFriend ? (
+        <ApolloConsumer>
+          {client => (
+            <Card.Content extra>
+              <div className="ui two buttons">
                 {heSent && (
                   <Button
                     onClick={() => {
@@ -53,7 +53,11 @@ const ItemExampleItems = ({
                           cache.writeQuery({
                             query: GET_USER_QUERY,
                             data: {
-                              getUser: { ...getUser, heSent: false, isFriend: acceptFriendRequest },
+                              getUser: {
+                                ...getUser,
+                                heSent: false,
+                                isFriend: acceptFriendRequest,
+                              },
                             },
                           });
                         },
@@ -98,13 +102,13 @@ const ItemExampleItems = ({
                     Add
                   </Button>
                 )}
-              </Item.Extra>
-            )}
-          </ApolloConsumer>
-        ) : null}
-      </Item.Content>
-    </Item>
-  </Item.Group>
+              </div>
+            </Card.Content>
+          )}
+        </ApolloConsumer>
+      ) : null}
+    </Card>
+  </Card.Group>
 );
 
 export default ItemExampleItems;

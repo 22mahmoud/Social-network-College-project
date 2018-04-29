@@ -24,7 +24,7 @@ const Signup = ({ history }) => (
     onCompleted={(data) => {
       if (data && data.signup.isOk) {
         localStorage.setItem('token', data.signup.token);
-        history.push('/feed');
+        history.push('/');
       }
     }}
   >
