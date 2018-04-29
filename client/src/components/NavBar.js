@@ -3,6 +3,7 @@ import { Menu, Input, Form, Dropdown, Icon } from 'semantic-ui-react';
 import { ApolloConsumer } from 'react-apollo';
 
 import CreatePostModal from './CreatePostModal';
+import { Ctx } from '../context/modal';
 
 const NavBar = ({ me, history }) => {
   const inputRef = React.createRef();
@@ -56,13 +57,14 @@ const NavBar = ({ me, history }) => {
         <Menu.Item name="firstname" onClick={() => {}}>
           {me.firstName}
         </Menu.Item>
-        <CreatePostModal
-          trigger={
-            <Menu.Item onClick={() => {}} name="upcomingEvents" icon="plus">
+        <Ctx.Consumer>
+          {({ toggleModalState }) => (
+            <Menu.Item onClick={() => toggleModalState()} name="upcomingEvents" icon="plus">
               <Icon name="add circle" />
             </Menu.Item>
-          }
-        />
+          )}
+        </Ctx.Consumer>
+        <CreatePostModal history={history} />
       </Menu.Menu>
     </Menu>
   );

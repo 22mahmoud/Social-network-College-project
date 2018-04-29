@@ -5,7 +5,7 @@ export const Ctx = React.createContext();
 export default class ModalPorovider extends React.Component {
   state = {
     modal: {
-      open: true,
+      open: false,
     },
   };
 

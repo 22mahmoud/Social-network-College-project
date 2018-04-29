@@ -8,6 +8,7 @@ import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './routes';
+import ModalPorovider from './context/modal';
 
 import registerServiceWorker from './registerServiceWorker';
 // eslint-disable-next-line import/first
@@ -28,7 +29,9 @@ const client = new ApolloClient({
 const Application = () => (
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <App />
+      <ModalPorovider>
+        <App />
+      </ModalPorovider>
     </BrowserRouter>
   </ApolloProvider>
 );

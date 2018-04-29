@@ -18,10 +18,16 @@ const Post = ({ post }) => (
         <Feed.Date> {distanceInWordsToNow(post.createdAt)} </Feed.Date>
       </Feed.Summary>
       <Feed.Extra text> {post.caption} </Feed.Extra>
-      {post.imageUrl && (
+      {post.imageUrl || (
         <Feed.Extra images>
           <a>
-            <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.user.id}.png`} />
+            <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}1.png`} />
+          </a>
+          <a>
+            <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}2.png`} />
+          </a>
+          <a>
+            <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}3.png`} />
           </a>
         </Feed.Extra>
       )}
@@ -35,7 +41,7 @@ const Post = ({ post }) => (
           {Math.round(Math.random() * 200)} comment
         </Feed.Like>
       </Feed.Meta>
-      <Feed.Extra as="form">
+      <Feed.Extra>
         <Form>
           <Form.TextArea
             onInput={e =>
