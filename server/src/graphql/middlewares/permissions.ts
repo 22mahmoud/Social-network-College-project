@@ -13,6 +13,7 @@ export default {
     getUserPosts: isLoggedIn,
     getMyFriends: isLoggedIn,
     getUser: isLoggedIn,
-    getMyFriendRequests: isLoggedIn
+    getMyFriendRequests: isLoggedIn,
+    getMyFriendsPosts: isLoggedIn
   }
 };

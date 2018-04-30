@@ -7,6 +7,20 @@ type Post {
   createdAt: Date!
 }
 
+type CustomUser {
+  id: String
+  firstName: String
+  lastName: String
+}
+
+type UserPost {
+  user: CustomUser
+  id: String
+  imageUrl: String
+  caption: String
+  createdAt: Date
+}
+
 type PostPayload {
   isOk: Boolean!
   post: Post
@@ -16,7 +30,7 @@ type PostPayload {
 type Query {
   getPost(id: String!): Post
   getUserPosts(userId: String!): [Post]!
-  getMyFriendsPosts: [Post]!
+  getMyFriendsPosts: [UserPost]!
 }
 
 type Mutation {

@@ -18,9 +18,30 @@ export default {
       }
     },
     getMyFriendsPosts: async (_, __, ctx) => {
-      console.log("====================================");
-      console.log(ctx);
-      console.log("====================================");
+      const posts = await getManager().query(
+        `SELECT u.id as user_id, u.firstName, u.lastName, p.id as post_id, p.imageUrl, p.caption, p.createdAt
+        FROM user u
+        INNER JOIN 
+        (
+        SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
+        FROM friend_request AS fq
+        WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
+        ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
+        INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC
+        `,
+        [ctx.user.id, ctx.user.id, ctx.user.id]
+      );
+
+      return posts.map(post => ({
+        id: post.post_id,
+        caption: post.caption,
+        createdAt: post.createdAt,
+        user: {
+          id: post.user_id,
+          firstName: post.firstName,
+          lastName: post.lastName
+        }
+      }));
     }
   },
   Mutation: {
