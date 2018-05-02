@@ -21,6 +21,7 @@ const GET_MY_FRIENDS_POSTS = gql`
     }
   }
 `;
+
 const NewsFeed = () => (
   <div
     style={{

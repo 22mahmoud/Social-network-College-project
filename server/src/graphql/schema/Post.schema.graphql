@@ -30,8 +30,14 @@ type PostPayload {
   errors: [Error]
 }
 
+type getPostPayload {
+  isOk: Boolean!
+  post: UserPost
+  errors: [Error]
+}
+
 type Query {
-  getPost(id: String!): Post
+  getPost(postId: String!): getPostPayload!
   getUserPosts(userId: String!): [Post]!
   getMyFriendsPosts: [UserPost]!
 }

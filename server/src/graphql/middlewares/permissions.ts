@@ -11,6 +11,7 @@ export default {
   },
   Query: {
     isLike: isLoggedIn,
+    getPost: isLoggedIn,
     getPostLikesCount: isLoggedIn,
     me: isLoggedIn,
     getUserPosts: isLoggedIn,

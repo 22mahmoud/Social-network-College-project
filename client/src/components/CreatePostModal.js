@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Button, Header, Icon, Modal, Image, Message } from 'semantic-ui-react';
 import gql from 'graphql-tag';
+import { withRouter } from 'react-router-dom';
 import { ApolloConsumer } from 'react-apollo';
 import Dropzone from 'react-dropzone';
+
 import { Ctx } from '../context/modal';
 
 const CREATE_POST_MUTATION = gql`
@@ -52,7 +54,12 @@ class CreatePostModal extends React.Component {
                   <Form>
                     <Form.TextArea
                       error={!!this.state.captionError}
-                      onChange={e => this.setState({ caption: e.target.value, captionError: '' })}
+                      onChange={e =>
+                        this.setState({
+                          caption: e.target.value,
+                          captionError: '',
+                        })
+                      }
                       id="caption"
                       type="text"
                       autoHeight
@@ -75,7 +82,9 @@ class CreatePostModal extends React.Component {
                     <Dropzone
                       style={{}}
                       onDrop={([file]) => {
-                        this.setState({ image: file });
+                        this.setState({
+                          image: file,
+                        });
                       }}
                     >
                       <Button color="violet" onClick={() => {}} inverted>
@@ -86,10 +95,12 @@ class CreatePostModal extends React.Component {
                       disabled={this.state.isSubmitting}
                       color="green"
                       onClick={async () => {
-                        this.setState({ isSubmitting: true });
+                        this.setState({
+                          isSubmitting: true,
+                        });
                         const {
                           data: {
-                            createPost: { errors, isOk },
+                            createPost: { errors, isOk, post },
                           },
                         } = await client.mutate({
                           mutation: CREATE_POST_MUTATION,
@@ -100,14 +111,22 @@ class CreatePostModal extends React.Component {
                         });
 
                         if (isOk) {
-                          this.setState({ isSubmitting: false });
+                          this.setState({
+                            isSubmitting: false,
+                          });
                           toggleModalState();
+                          this.props.history.push(`/post/${post.id}`);
                         }
 
                         if (errors) {
-                          this.setState({ isSubmitting: false, captionError: errors[0].message });
+                          this.setState({
+                            isSubmitting: false,
+                            captionError: errors[0].message,
+                          });
                         }
-                        this.setState({ isSubmitting: false });
+                        this.setState({
+                          isSubmitting: false,
+                        });
                       }}
                       inverted
                     >
@@ -124,4 +143,4 @@ class CreatePostModal extends React.Component {
   }
 }
 
-export default CreatePostModal;
+export default withRouter(CreatePostModal);

@@ -5,6 +5,8 @@ import PrivateRoute from '../routes/PrivateRoute';
 import NewsFeed from '../components/Post/NewsFeed';
 import Search from '../components/Search';
 import NavBar from '../components/NavBar';
+import Post from '../components/Post/Post';
+import signlePost from './singlePost';
 
 const Home = ({ history, me }) => (
   <div
@@ -23,6 +25,7 @@ const Home = ({ history, me }) => (
     >
       <Switch>
         <PrivateRoute exact path="/" component={props => <NewsFeed {...props} userId={me.id} />} />
+        <PrivateRoute exact path="/post/:id" component={signlePost} />
         <PrivateRoute
           exact
           path="/search/:email"

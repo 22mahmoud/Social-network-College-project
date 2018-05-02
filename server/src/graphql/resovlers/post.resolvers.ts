@@ -4,8 +4,14 @@ import * as mkdirp from "mkdirp";
 import shortid from "shortid";
 
 import { Post } from "../../models/entity/Post";
+import { validate } from "class-validator";
 const uploadDir = "./public";
 mkdirp.sync(uploadDir);
+
+interface ErrorInterface {
+  path: string;
+  message: string;
+}
 
 const storeUpload = async ({ stream, filename }): Promise<any> => {
   const id = shortid.generate();
@@ -28,6 +34,86 @@ const processUpload = async upload => {
 
 export default {
   Query: {
+    getPost: async (_, { postId }, ctx) => {
+      try {
+        const [post] = await getManager().query(
+          `
+            SELECT  u.id as user_id, u.firstName, u.lastName,
+            p.id as post_id, p.imageUrl, p.caption, p.createdAt, p.imageUrl
+            FROM post as p
+            INNER JOIN user AS u ON u.id = p.userId 
+            WHERE p.id = ?
+          `,
+          [postId]
+        );
+
+        if (!post) {
+          return {
+            isOk: false,
+            errors: [{ path: "post", message: "post not found" }]
+          };
+        }
+
+        if (post.user_id === ctx.user.id) {
+          return {
+            isOk: true,
+            post: {
+              id: post.post_id,
+              caption: post.caption,
+              createdAt: post.createdAt,
+              likesCount: post.likesCount,
+              imageUrl: post.imageUrl,
+              user: {
+                id: post.user_id,
+                firstName: post.firstName,
+                lastName: post.lastName
+              }
+            }
+          };
+        }
+
+        const myFriends = await getManager().query(
+          `SELECT u.id AS user_id
+          FROM user u
+          INNER JOIN 
+          (
+          SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
+          FROM friend_request AS fq
+          WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
+          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
+          `,
+          [ctx.user.id, ctx.user.id, ctx.user.id]
+        );
+
+        if (!myFriends.some(friend => friend.id === post.userId)) {
+          return {
+            isOk: false,
+            errors: [{ path: "post", message: "post not found" }]
+          };
+        }
+
+        return {
+          isOk: true,
+          post: {
+            id: post.post_id,
+            caption: post.caption,
+            imageUrl: post.imageUrl,
+            createdAt: post.createdAt,
+            likesCount: post.likesCount,
+            user: {
+              id: post.user_id,
+              firstName: post.firstName,
+              lastName: post.lastName
+            }
+          }
+        };
+      } catch (error) {
+        console.error(error);
+        return {
+          isOk: false
+        };
+      }
+    },
     getUserPosts: async (_, { userId }) => {
       try {
         const posts = await getManager()
@@ -64,6 +150,7 @@ export default {
       return posts.map(post => ({
         id: post.post_id,
         caption: post.caption,
+        imageUrl: post.imageUrl,
         createdAt: post.createdAt,
         likesCount: post.likesCount,
         user: {
@@ -77,8 +164,26 @@ export default {
   Mutation: {
     createPost: async (_, { caption, image }, ctx) => {
       try {
-        const imageUrl = await processUpload(image);
-        const post = Post.create({ caption, imageUrl, user: ctx.user });
+        const post = Post.create({
+          caption,
+          imageUrl: image ? await processUpload(image) : null,
+          user: ctx.user
+        });
+        const errors = await validate(post);
+        if (errors.length > 0) {
+          const formatedErrors: ErrorInterface[] = [];
+          errors.forEach(error => {
+            formatedErrors.push({
+              path: error.property,
+              message: Object.values(error.constraints)[0]
+            });
+          });
+
+          return {
+            isOk: false,
+            errors: formatedErrors
+          };
+        }
         await post.save();
         return {
           isOk: true,

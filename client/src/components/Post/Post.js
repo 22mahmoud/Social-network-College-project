@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feed, Icon, Form } from 'semantic-ui-react';
+import { Feed, Icon, Form, Modal, Image } from 'semantic-ui-react';
 import { distanceInWordsToNow } from 'date-fns';
 import { Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -42,17 +42,40 @@ const Post = ({ post }) => {
           <Feed.Date> {distanceInWordsToNow(post.createdAt)} </Feed.Date>
         </Feed.Summary>
         <Feed.Extra text> {post.caption} </Feed.Extra>
-        {post.imageUrl || (
+        {post.imageUrl && (
           <Feed.Extra images>
-            <a>
-              <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}1.png`} />
-            </a>
-            <a>
-              <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}2.png`} />
-            </a>
-            <a>
-              <img alt="pic" src={`https://api.adorable.io/avatars/132/${post.id}3.png`} />
-            </a>
+            <Modal
+              style={{
+                marginTop: '0px !important',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+              trigger={
+                <a>
+                  <img
+                    alt="pic"
+                    src={`http://localhost:4000/${post.imageUrl.replace('public/', '')}`}
+                  />
+                </a>
+              }
+            >
+              <div
+                style={{
+                  padding: '10px 0 10px 0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Modal.Content image>
+                  <Image
+                    wrapped
+                    size="large"
+                    src={`http://localhost:4000/${post.imageUrl.replace('public/', '')}`}
+                  />
+                </Modal.Content>
+              </div>
+            </Modal>
           </Feed.Extra>
         )}
         <Feed.Meta
