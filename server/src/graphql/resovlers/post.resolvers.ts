@@ -1,5 +1,30 @@
-import { Post } from "../../models/entity/Post";
 import { getManager } from "typeorm";
+import { createWriteStream } from "fs";
+import * as mkdirp from "mkdirp";
+import shortid from "shortid";
+
+import { Post } from "../../models/entity/Post";
+const uploadDir = "./public";
+mkdirp.sync(uploadDir);
+
+const storeUpload = async ({ stream, filename }): Promise<any> => {
+  const id = shortid.generate();
+  const path = `${uploadDir}/${id}-${filename}`;
+
+  return new Promise((resolve, reject) =>
+    stream
+      .pipe(createWriteStream(path))
+      .on("finish", () => resolve({ id, path }))
+      .on("error", reject)
+  );
+};
+
+const processUpload = async upload => {
+  const { stream, filename } = await upload;
+  const { path } = await storeUpload({ stream, filename });
+
+  return path;
+};
 
 export default {
   Query: {
@@ -17,9 +42,13 @@ export default {
         return;
       }
     },
+    // u.id as user_id, u.firstName, u.lastName,
+    //     p.id as post_id, p.imageUrl, p.caption, p.createdAt
+    // INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC
     getMyFriendsPosts: async (_, __, ctx) => {
       const posts = await getManager().query(
-        `SELECT u.id as user_id, u.firstName, u.lastName, p.id as post_id, p.imageUrl, p.caption, p.createdAt
+        `SELECT u.id as user_id, u.firstName, u.lastName,
+        p.id as post_id, p.imageUrl, p.caption, p.createdAt
         FROM user u
         INNER JOIN 
         (
@@ -27,7 +56,7 @@ export default {
         FROM friend_request AS fq
         WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
         ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
-        INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC
+        INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC 
         `,
         [ctx.user.id, ctx.user.id, ctx.user.id]
       );
@@ -36,6 +65,7 @@ export default {
         id: post.post_id,
         caption: post.caption,
         createdAt: post.createdAt,
+        likesCount: post.likesCount,
         user: {
           id: post.user_id,
           firstName: post.firstName,
@@ -45,8 +75,9 @@ export default {
     }
   },
   Mutation: {
-    createPost: async (_, { caption, imageUrl }, ctx) => {
+    createPost: async (_, { caption, image }, ctx) => {
       try {
+        const imageUrl = await processUpload(image);
         const post = Post.create({ caption, imageUrl, user: ctx.user });
         await post.save();
         return {

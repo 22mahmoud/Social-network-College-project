@@ -17,6 +17,7 @@ import { Unique } from "../../helpers/uniqueUser.validate";
 import constants from "../../config/constants";
 import { Post } from "./Post";
 import { FriendRequest } from "./FriendRequest";
+import { LikePost } from "./LikePost";
 
 @Entity()
 export class User extends BaseEntity {
@@ -51,6 +52,9 @@ export class User extends BaseEntity {
 
   @OneToMany(_ => FriendRequest, friendrequest => friendrequest.receiver)
   requestsReceived: FriendRequest[];
+
+  @OneToMany(() => LikePost, like => like.user)
+  likePost: LikePost;
 
   @BeforeUpdate()
   @BeforeInsert()

@@ -5,12 +5,14 @@ import {
   BaseEntity,
   CreateDateColumn,
   PrimaryColumn,
-  BeforeInsert
+  BeforeInsert,
+  OneToMany
 } from "typeorm";
 import { IsNotEmpty } from "class-validator";
 import uuidv4 from "uuid/v4";
 
 import { User } from "./User";
+import { LikePost } from "./LikePost";
 
 @Entity()
 export class Post extends BaseEntity {
@@ -27,6 +29,9 @@ export class Post extends BaseEntity {
 
   @ManyToOne(() => User, user => user.posts)
   user: User;
+
+  @OneToMany(() => LikePost, likePost => likePost.post)
+  likePost: LikePost[];
 
   @BeforeInsert()
   addId() {

@@ -1,0 +1,12 @@
+type LikePayload {
+  Liked: Boolean
+}
+
+type Query {
+  getPostLikesCount(postId: String!): Int!
+  isLike(postId: String!): Boolean!
+}
+
+type Mutation {
+  likePostToggle(postId: String!): LikePayload!
+}

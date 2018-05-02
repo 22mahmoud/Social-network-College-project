@@ -1,5 +1,7 @@
 scalar Date
 
+scalar Upload
+
 type Post {
   id: String!
   imageUrl: String
@@ -15,6 +17,7 @@ type CustomUser {
 
 type UserPost {
   user: CustomUser
+  likesCount: Int
   id: String
   imageUrl: String
   caption: String
@@ -34,7 +37,7 @@ type Query {
 }
 
 type Mutation {
-  createPost(imageUrl: String, caption: String!): PostPayload!
+  createPost(image: Upload, caption: String!): PostPayload!
   updatePost(imageUrl: String, caption: String, postId: Int!): PostPayload!
   deletePost(postId: String!): PostPayload!
 }

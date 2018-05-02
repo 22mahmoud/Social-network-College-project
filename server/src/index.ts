@@ -1,4 +1,5 @@
 import { GraphQLServer } from "graphql-yoga";
+import * as express from "express";
 
 import resolvers from "./graphql/resovlers";
 import typeDefs from "./graphql/schema";
@@ -18,6 +19,8 @@ const server = new GraphQLServer({
   context: req => ({ ...req }),
   middlewares: [permissions]
 });
+
+server.express.use(express.static("public"));
 
 server.start(options, () =>
   console.log(
