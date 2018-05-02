@@ -12,6 +12,7 @@ const GET_MY_FRIENDS_POSTS = gql`
       imageUrl
       caption
       createdAt
+      likesCount
       user {
         id
         firstName

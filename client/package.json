@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.1.4",
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-client": "^2.2.8",
+    "apollo-link-context": "^1.0.8",
+    "apollo-upload-client": "^8.0.0",
     "date-fns": "^1.29.0",
     "formik": "^0.11.11",
     "graphql": "^0.13.2",
@@ -11,6 +15,7 @@
     "react": "^16.3.2",
     "react-apollo": "^3.0.0-alpha.0",
     "react-dom": "^16.3.2",
+    "react-dropzone": "^4.2.9",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "semantic-ui-css": "^2.3.1",

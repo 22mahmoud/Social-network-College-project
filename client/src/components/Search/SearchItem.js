@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, Button, Card, Image } from 'semantic-ui-react';
+import {  Button, Card, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { ApolloConsumer } from 'react-apollo';
 
