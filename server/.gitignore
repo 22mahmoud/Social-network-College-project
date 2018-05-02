@@ -6,3 +6,4 @@ tmp/
 temp/
 ormconfig.json
 ./src/temp.ts
+public/

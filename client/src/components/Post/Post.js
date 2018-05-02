@@ -52,7 +52,7 @@ const Post = ({ post }) => {
               }}
               trigger={
                 <a>
-                  <img
+                  <Image
                     alt="pic"
                     src={`http://localhost:4000/${post.imageUrl.replace('public/', '')}`}
                   />
