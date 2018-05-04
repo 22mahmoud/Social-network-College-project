@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 
 import PrivateRoute from '../routes/PrivateRoute';
 import NewsFeed from '../components/Post/NewsFeed';
 import Search from '../components/Search';
 import NavBar from '../components/NavBar';
-import Post from '../components/Post/Post';
 import signlePost from './singlePost';
 
 const Home = ({ history, me }) => (
@@ -19,19 +19,33 @@ const Home = ({ history, me }) => (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
+        gridTemplateColumns: 'repeat(10, 1fr)',
         background: '#ebebeb',
       }}
     >
-      <Switch>
-        <PrivateRoute exact path="/" component={props => <NewsFeed {...props} userId={me.id} />} />
-        <PrivateRoute exact path="/post/:id" component={signlePost} />
-        <PrivateRoute
-          exact
-          path="/search/:email"
-          component={props => <Search {...props} me={me} />}
-        />
-      </Switch>
+      <div
+        style={{
+          gridColumn: '4/8',
+          justifySelf: 'center',
+          width: '100%',
+        }}
+      >
+        <Container style={{ marginTop: '7em' }}>
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/"
+              component={props => <NewsFeed {...props} userId={me.id} />}
+            />
+            <PrivateRoute exact path="/post/:id" component={signlePost} />
+            <PrivateRoute
+              exact
+              path="/search/:email"
+              component={props => <Search {...props} me={me} />}
+            />
+          </Switch>
+        </Container>
+      </div>
     </div>
   </div>
 );

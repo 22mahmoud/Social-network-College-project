@@ -149,6 +149,10 @@ const Signup = ({ history }) => (
         value={values.password}
         icon="unlock alternate"
       />
+      <Form.Select 
+       placeholder='Select your Gender'
+        options={[{ key: "male", value: "male", text: 'male' }, { key: "female", value: "female", text: 'female' }]}
+      />
       <div
         style={{
                     display: 'flex',

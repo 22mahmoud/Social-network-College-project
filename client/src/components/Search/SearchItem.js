@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Button, Card, Image } from 'semantic-ui-react';
+import { Button, Card, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { ApolloConsumer } from 'react-apollo';
 
@@ -31,24 +31,28 @@ const ItemExampleItems = ({
         <Card.Header>
           {firstName} {lastName}
         </Card.Header>
-        <Card.Meta>{email}</Card.Meta>
+        <Card.Meta> {email} </Card.Meta>
       </Card.Content>
-
-      {id !== me.id || isFriend ? (
+      {id !== me.id ? (
         <ApolloConsumer>
           {client => (
             <Card.Content extra>
               <div className="ui two buttons">
                 {heSent && (
                   <Button
+                    color="blue"
                     onClick={() => {
                       client.mutate({
                         mutation: ACCEPT_FRIEND_REQUEST_MUTATION,
-                        variables: { friendRequestId },
+                        variables: {
+                          friendRequestId,
+                        },
                         update: (cache, { data: { acceptFriendRequest } }) => {
                           const { getUser } = cache.readQuery({
                             query: GET_USER_QUERY,
-                            variables: { email: eQuery },
+                            variables: {
+                              email: eQuery,
+                            },
                           });
                           cache.writeQuery({
                             query: GET_USER_QUERY,
@@ -69,7 +73,7 @@ const ItemExampleItems = ({
                   </Button>
                 )}
                 {youSent && (
-                  <Button onClick={() => {}} floated="right">
+                  <Button floated="right" color="blue">
                     friend request sent
                   </Button>
                 )}
@@ -78,20 +82,25 @@ const ItemExampleItems = ({
                     onClick={() => {
                       client.mutate({
                         mutation: SEND_FRRIEND_REQUEST_MUTATION,
-                        variables: { userId: id },
-                        // optimisticResponse: {
-                        //   __typename: 'Mutation',
-                        //   sendFriendRequest: true,
-                        // },
+                        variables: {
+                          userId: id,
+                        },
                         update: (cache, { data: { sendFriendRequest } }) => {
                           const { getUser } = cache.readQuery({
                             query: GET_USER_QUERY,
-                            variables: { email: eQuery },
+                            variables: {
+                              email: eQuery,
+                            },
                           });
+
                           cache.writeQuery({
                             query: GET_USER_QUERY,
                             data: {
-                              getUser: { ...getUser, notYet: false, youSent: sendFriendRequest },
+                              getUser: {
+                                ...getUser,
+                                notYet: false,
+                                youSent: sendFriendRequest,
+                              },
                             },
                           });
                         },
@@ -100,6 +109,11 @@ const ItemExampleItems = ({
                     floated="right"
                   >
                     Add
+                  </Button>
+                )}
+                {isFriend && (
+                  <Button floated="right" color="green">
+                    <span role="img"> {'👍'} </span> Friends
                   </Button>
                 )}
               </div>

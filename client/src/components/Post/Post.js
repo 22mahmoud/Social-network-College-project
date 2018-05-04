@@ -12,7 +12,9 @@ const GET_POST_LIKES_COUNT_QUERY = gql`
 
 const IS_LIKE_QUERY = gql`
   query($postId: String!) {
-    isLike(postId: $postId)
+    isLike(postId: $postId) {
+      Liked
+    }
   }
 `;
 
@@ -43,7 +45,7 @@ const Post = ({ post }) => {
         </Feed.Summary>
         <Feed.Extra text> {post.caption} </Feed.Extra>
         {post.imageUrl && (
-          <Feed.Extra images>
+          <Feed.Extra>
             <Modal
               style={{
                 marginTop: '0px !important',
@@ -53,6 +55,7 @@ const Post = ({ post }) => {
               trigger={
                 <a>
                   <Image
+                    size="medium"
                     alt="pic"
                     src={`http://localhost:4000/${post.imageUrl.replace('public/', '')}`}
                   />
@@ -79,12 +82,18 @@ const Post = ({ post }) => {
           </Feed.Extra>
         )}
         <Feed.Meta
-          style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
         >
           <Query
             query={GET_POST_LIKES_COUNT_QUERY}
-            fetchPolicy="network-only"
-            variables={{ postId: post.id }}
+            variables={{
+              postId: post.id,
+            }}
+            fetchPolicy="cache-and-network"
           >
             {({ loading, error, data }) => {
               if (loading) return 'Loading ...';
@@ -93,8 +102,9 @@ const Post = ({ post }) => {
                 <div>
                   <Query
                     query={IS_LIKE_QUERY}
-                    variables={{ postId: post.id }}
-                    fetchPolicy="network-only"
+                    variables={{
+                      postId: post.id,
+                    }}
                   >
                     {({ loading: l, error: e, data: d }) => {
                       if (l) return 'Loading ...';
@@ -103,14 +113,55 @@ const Post = ({ post }) => {
                         <ApolloConsumer>
                           {client => (
                             <Feed.Like
-                              onClick={async () => {
-                                await client.mutate({
+                              onClick={() => {
+                                client.mutate({
                                   mutation: LIKE_TOGGLE_MUTATION,
-                                  variables: { postId: post.id },
+                                  variables: {
+                                    postId: post.id,
+                                  },
+
+                                  update: (cache, { data: { likePostToggle } }) => {
+                                    const { isLike } = cache.readQuery({
+                                      query: IS_LIKE_QUERY,
+                                      variables: {
+                                        postId: post.id,
+                                      },
+                                    });
+
+                                    const { getPostLikesCount } = cache.readQuery({
+                                      query: GET_POST_LIKES_COUNT_QUERY,
+                                      variables: {
+                                        postId: post.id,
+                                      },
+                                    });
+
+                                    const newLikesCount = likePostToggle.Liked
+                                      ? getPostLikesCount + 1
+                                      : getPostLikesCount - 1;
+
+                                    cache.writeQuery({
+                                      query: GET_POST_LIKES_COUNT_QUERY,
+                                      variables: { postId: post.id },
+                                      data: {
+                                        getPostLikesCount: newLikesCount,
+                                      },
+                                    });
+
+                                    cache.writeQuery({
+                                      query: IS_LIKE_QUERY,
+                                      variables: { postId: post.id },
+                                      data: {
+                                        isLike: {
+                                          ...isLike,
+                                          Liked: likePostToggle.Liked,
+                                        },
+                                      },
+                                    });
+                                  },
                                 });
                               }}
                             >
-                              <Icon name="like" color={d.isLike && 'red'} />
+                              <Icon name="like" color={d.isLike.Liked ? 'red' : 'grey'} />
                               {`${data.getPostLikesCount} Likes`}
                             </Feed.Like>
                           )}
@@ -122,10 +173,9 @@ const Post = ({ post }) => {
               );
             }}
           </Query>
-
           <Feed.Like onClick={() => textAreaRef.current.childNodes[0][0].focus()}>
-            <Icon name="comment" />
-            {Math.round(Math.random() * 200)} comment
+            <Icon name="comment" /> {Math.round(Math.random() * 200)}
+            comment
           </Feed.Like>
         </Feed.Meta>
         <Feed.Extra>

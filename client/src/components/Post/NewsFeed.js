@@ -23,24 +23,14 @@ const GET_MY_FRIENDS_POSTS = gql`
 `;
 
 const NewsFeed = () => (
-  <div
-    style={{
-      gridColumn: '2/5',
-      justifySelf: 'center',
-      width: '100%',
-    }}
-  >
-    <Query query={GET_MY_FRIENDS_POSTS}>
-      {({ loading, error, data }) => {
-        if (loading) return 'Loading ...';
-        if (error) return 'Error';
+  <Query query={GET_MY_FRIENDS_POSTS}>
+    {({ loading, error, data }) => {
+      if (loading) return 'Loading ...';
+      if (error) return 'Error';
 
-        return (
-          <Feed> {data.getMyFriendsPosts.map(post => <Post key={post.id} post={post} />)}</Feed>
-        );
-      }}
-    </Query>
-  </div>
+      return <Feed> {data.getMyFriendsPosts.map(post => <Post key={post.id} post={post} />)}</Feed>;
+    }}
+  </Query>
 );
 
 export default NewsFeed;

@@ -32,7 +32,6 @@ const Search = ({
 }) => (
   <div
     style={{
-      gridColumn: '2/5',
       display: 'flex',
       justifyContent: 'center',
       background: '#fff',
