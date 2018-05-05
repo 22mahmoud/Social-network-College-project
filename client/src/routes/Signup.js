@@ -67,7 +67,7 @@ const Signup = ({ history }) => (
             }
 
             if (isOk && token) {
-              localStorage.setItem("token", token)
+              localStorage.setItem('token', token);
               setSubmitting(false);
               history.push('/');
             }
@@ -83,18 +83,18 @@ const Signup = ({ history }) => (
                 borderRadius: '5',
               }}
   >
-    <Header as="h3">   <Icon name='signup' />
-    <Header.Content>
+    <Header as="h3">   <Icon name="signup" />
+      <Header.Content>
       Signup
       <Header.Subheader>
-      
+
                     already have an account ?
                     <a href="" onClick={() => history.push('/login')}>
                       sign in here
                     </a>
-      
+
       </Header.Subheader>
-    </Header.Content> </Header>
+      </Header.Content> </Header>
     <Form onSubmit={handleSubmit} error={errors === undefined}>
       {errors && (
       <Message error header="Registration errors" list={[...Object.values(errors)]} />
@@ -149,9 +149,9 @@ const Signup = ({ history }) => (
         value={values.password}
         icon="unlock alternate"
       />
-      <Form.Select 
-       placeholder='Select your Gender'
-        options={[{ key: "male", value: "male", text: 'male' }, { key: "female", value: "female", text: 'female' }]}
+      <Form.Select
+        placeholder="Select your Gender"
+        options={[{ key: 'male', value: 'male', text: 'male' }, { key: 'female', value: 'female', text: 'female' }]}
       />
       <div
         style={{

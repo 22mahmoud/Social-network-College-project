@@ -28,10 +28,10 @@ export default {
         );
 
         if (likes.some(elm => elm.userId === ctx.user.id)) {
-          return true;
+          return {Liked: true};
         }
 
-        return false;
+        return {Liked: false};
       } catch (error) {
         console.error(error);
         return;

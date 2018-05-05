@@ -7,9 +7,12 @@ export default {
     deletePost: isLoggedIn,
     sendFriendRequest: isLoggedIn,
     acceptFriendRequest: isLoggedIn,
-    likePostToggle: isLoggedIn
+    likePostToggle: isLoggedIn,
+    commentPost: isLoggedIn
   },
   Query: {
+    getPostComments: isLoggedIn,
+    getPostCommentsCount: isLoggedIn,
     isLike: isLoggedIn,
     getPost: isLoggedIn,
     getPostLikesCount: isLoggedIn,

@@ -18,6 +18,7 @@ import constants from "../../config/constants";
 import { Post } from "./Post";
 import { FriendRequest } from "./FriendRequest";
 import { LikePost } from "./LikePost";
+import { CommentPost } from "./CommentPost";
 
 @Entity()
 export class User extends BaseEntity {
@@ -55,6 +56,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => LikePost, like => like.user)
   likePost: LikePost;
+
+  @OneToMany(() => CommentPost, commentPost => commentPost.user)
+  commentPost: CommentPost;
 
   @BeforeUpdate()
   @BeforeInsert()

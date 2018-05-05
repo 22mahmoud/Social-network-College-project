@@ -19,8 +19,10 @@ export const isLoggedIn = async (resolve, _, __, ctx) => {
     }
 
     ctx.user = user;
+
     return resolve();
   } catch (error) {
+    console.error(error);
     throw new AuthError();
   }
 };

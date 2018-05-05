@@ -1,76 +1,126 @@
 import React from 'react';
-import { Button, Comment, Form, Header } from 'semantic-ui-react';
+import { Form, Comment, Button } from 'semantic-ui-react';
+import gql from 'graphql-tag';
+import { Query, ApolloConsumer } from 'react-apollo';
 
-const CommentPost = () => (
-  <Comment.Group>
-    <Header as="h3" dividing>
-      Comments
-    </Header>
+const GET_POST_COMMENT_QUERY = gql`
+  query($postId: String!) {
+    getPostComments(postId: $postId) {
+      id
+      user {
+        id
+        firstName
+        lastName
+      }
+      content
+    }
+  }
+`;
 
-    <Comment>
-      <Comment.Avatar src="/assets/images/avatar/small/matt.jpg" />
-      <Comment.Content>
-        <Comment.Author as="a">Matt</Comment.Author>
-        <Comment.Metadata>
-          <div>Today at 5:42PM</div>
-        </Comment.Metadata>
-        <Comment.Text>How artistic!</Comment.Text>
-        <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
-        </Comment.Actions>
-      </Comment.Content>
-    </Comment>
+const COMMENT_POST_MUTATION = gql`
+  mutation($postId: String!, $content: String!) {
+    commentPost(postId: $postId, content: $content) {
+      id
+      __typename
+      user {
+        id
+        firstName
+        lastName
+      }
+      content
+    }
+  }
+`;
 
-    <Comment>
-      <Comment.Avatar src="/assets/images/avatar/small/elliot.jpg" />
-      <Comment.Content>
-        <Comment.Author as="a">Elliot Fu</Comment.Author>
-        <Comment.Metadata>
-          <div>Yesterday at 12:30AM</div>
-        </Comment.Metadata>
-        <Comment.Text>
-          <p>This has been very useful for my research. Thanks as well!</p>
-        </Comment.Text>
-        <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
-        </Comment.Actions>
-      </Comment.Content>
-      <Comment.Group>
-        <Comment>
-          <Comment.Avatar src="/assets/images/avatar/small/jenny.jpg" />
-          <Comment.Content>
-            <Comment.Author as="a">Jenny Hess</Comment.Author>
-            <Comment.Metadata>
-              <div>Just now</div>
-            </Comment.Metadata>
-            <Comment.Text>Elliot you are always so right :)</Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>Reply</Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-      </Comment.Group>
-    </Comment>
+class CommentPost extends React.Component {
+  state = {
+    content: '',
+  };
 
-    <Comment>
-      <Comment.Avatar src="/assets/images/avatar/small/joe.jpg" />
-      <Comment.Content>
-        <Comment.Author as="a">Joe Henderson</Comment.Author>
-        <Comment.Metadata>
-          <div>5 days ago</div>
-        </Comment.Metadata>
-        <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-        <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
-        </Comment.Actions>
-      </Comment.Content>
-    </Comment>
+  render() {
+    const { postId } = this.props;
+    return (
+      <React.Fragment>
+        <Query query={GET_POST_COMMENT_QUERY} variables={{ postId }}>
+          {({ loading, error, data }) => {
+            if (loading) return 'Loading..';
+            if (error) return 'error.';
 
-    <Form reply>
-      <Form.TextArea />
-      <Button content="Add Reply" labelPosition="left" icon="edit" primary />
-    </Form>
-  </Comment.Group>
-);
+            return (
+              <Comment.Group>
+                <div
+                  style={{ background: 'rgba(1,1,1,.009)', padding: '10px', marginBottom: '5px ' }}
+                >
+                  {data.getPostComments.map((comment) => {
+                    const {
+                      id,
+                      user: { id: uid, firstName, lastName },
+                      content,
+                    } = comment;
+                    return (
+                      <Comment key={id}>
+                        <Comment.Avatar src={`https://api.adorable.io/avatars/132/${uid}.png`} />
+                        <Comment.Content>
+                          <Comment.Author as="a">{`${firstName} ${lastName}`}</Comment.Author>
+                          <Comment.Metadata>
+                            <div>Today at 5:42PM</div>
+                          </Comment.Metadata>
+                          <Comment.Text>{content}</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+                    );
+                  })}
+                </div>
+              </Comment.Group>
+            );
+          }}
+        </Query>
+        <ApolloConsumer>
+          {client => (
+            <Form
+              onSubmit={() => {
+                this.setState({ content: '' });
+                client.mutate({
+                  mutation: COMMENT_POST_MUTATION,
+                  variables: { postId, content: this.state.content },
+
+                  update: (cache, { data: { commentPost } }) => {
+                    const { getPostComments } = cache.readQuery({
+                      query: GET_POST_COMMENT_QUERY,
+                      variables: {
+                        postId,
+                      },
+                    });
+
+                    cache.writeQuery({
+                      query: GET_POST_COMMENT_QUERY,
+                      variables: {
+                        postId,
+                      },
+                      data: {
+                        getPostComments: [...getPostComments, commentPost],
+                      },
+                    });
+                  },
+                });
+              }}
+            >
+              <Form.TextArea
+                value={this.state.content}
+                onChange={e => this.setState({ content: e.target.value })}
+                rows={1}
+                autoHeight
+                placeholder="add comment..."
+                type="text"
+                name="firstName"
+              />
+              <Button type="submit"> Comment </Button>
+            </Form>
+          )}
+        </ApolloConsumer>
+      </React.Fragment>
+    );
+  }
+}
 
 export default CommentPost;

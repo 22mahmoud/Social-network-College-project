@@ -1,0 +1,20 @@
+type BasicUser {
+  id: String!
+  firstName: String!
+  lastName: String!
+}
+
+type Comment {
+  id: String!
+  user: BasicUser!
+  content: String!
+}
+
+type Query {
+  getPostComments(postId: String!): [Comment]!
+  getPostCommentsCount(postId: String!): Int!
+}
+
+type Mutation {
+  commentPost(postId: String!, content: String!): Comment!
+}

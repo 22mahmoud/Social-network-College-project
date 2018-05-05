@@ -13,6 +13,7 @@ import uuidv4 from "uuid/v4";
 
 import { User } from "./User";
 import { LikePost } from "./LikePost";
+import { CommentPost } from "./CommentPost";
 
 @Entity()
 export class Post extends BaseEntity {
@@ -20,6 +21,9 @@ export class Post extends BaseEntity {
 
   @Column({ default: null, type: "varchar", length: "200" })
   imageUrl: string;
+
+  @Column({ type: "tinyint", default: false })
+  isPrivate: boolean;
 
   @IsNotEmpty()
   @Column({ type: "text" })
@@ -32,6 +36,9 @@ export class Post extends BaseEntity {
 
   @OneToMany(() => LikePost, likePost => likePost.post)
   likePost: LikePost[];
+
+  @OneToMany(() => CommentPost, commentPost => commentPost.post)
+  commentPost: LikePost[];
 
   @BeforeInsert()
   addId() {

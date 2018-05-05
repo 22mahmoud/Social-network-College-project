@@ -4,7 +4,7 @@ type LikePayload {
 
 type Query {
   getPostLikesCount(postId: String!): Int!
-  isLike(postId: String!): Boolean!
+  isLike(postId: String!): LikePayload!
 }
 
 type Mutation {
