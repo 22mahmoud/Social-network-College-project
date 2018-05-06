@@ -18,7 +18,7 @@ import registerServiceWorker from './registerServiceWorker';
 // eslint-disable-next-line import/first
 import 'semantic-ui-css/semantic.min.css';
 
-const link = createUploadLink({ uri: 'http://localhost:4000/graphql' });
+const link = createUploadLink({ uri: 'http://127.0.0.1:4000/graphql' });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
@@ -34,18 +34,6 @@ const client = new ApolloClient({
   link: authLink.concat(link),
   cache: new InMemoryCache(),
 });
-
-// const client = new ApolloClient({
-//   uri: 'http://localhost:4000/graphql',
-//   request: (operation) => {
-//     const token = localStorage.getItem('token');
-//     operation.setContext({
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//   },
-// });
 
 const Application = () => (
   <ApolloProvider client={client}>

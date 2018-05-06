@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Comment, Button } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query, ApolloConsumer } from 'react-apollo';
+import { distanceInWordsToNow } from 'date-fns';
 
 const GET_POST_COMMENT_QUERY = gql`
   query($postId: String!) {
@@ -13,6 +14,7 @@ const GET_POST_COMMENT_QUERY = gql`
         lastName
       }
       content
+      createdAt
     }
   }
 `;
@@ -28,6 +30,7 @@ const COMMENT_POST_MUTATION = gql`
         lastName
       }
       content
+      createdAt
     }
   }
 `;
@@ -55,15 +58,17 @@ class CommentPost extends React.Component {
                     const {
                       id,
                       user: { id: uid, firstName, lastName },
+                      createdAt,
                       content,
                     } = comment;
+
                     return (
                       <Comment key={id}>
                         <Comment.Avatar src={`https://api.adorable.io/avatars/132/${uid}.png`} />
                         <Comment.Content>
                           <Comment.Author as="a">{`${firstName} ${lastName}`}</Comment.Author>
                           <Comment.Metadata>
-                            <div>Today at 5:42PM</div>
+                            <div>{distanceInWordsToNow(createdAt)}</div>
                           </Comment.Metadata>
                           <Comment.Text>{content}</Comment.Text>
                         </Comment.Content>

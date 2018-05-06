@@ -2,11 +2,13 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
-import PrivateRoute from '../routes/PrivateRoute';
-import NewsFeed from '../components/Post/NewsFeed';
-import Search from '../components/Search';
-import NavBar from '../components/NavBar';
+import PrivateRoute from './PrivateRoute';
+import Search from './Search';
 import signlePost from './singlePost';
+
+import NewsFeed from '../components/Post/NewsFeed';
+import NavBar from '../components/NavBar';
+import FreindRequests from './FreindRequests';
 
 const Home = ({ history, me }) => (
   <div
@@ -38,6 +40,11 @@ const Home = ({ history, me }) => (
               component={props => <NewsFeed {...props} userId={me.id} />}
             />
             <PrivateRoute exact path="/post/:id" component={signlePost} />
+            <PrivateRoute
+              exact
+              path="/friendrequests"
+              component={props => <FreindRequests {...props} me={me} />}
+            />
             <PrivateRoute
               exact
               path="/search/:email"

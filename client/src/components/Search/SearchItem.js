@@ -3,7 +3,7 @@ import { Button, Card, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { ApolloConsumer } from 'react-apollo';
 
-import { GET_USER_QUERY } from './index';
+import { GET_USER_QUERY } from '../../routes/Search';
 
 const SEND_FRRIEND_REQUEST_MUTATION = gql`
   mutation($userId: String!) {

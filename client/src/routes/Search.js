@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import SearchItem from './SearchItem';
+import SearchItem from '../components/Search/SearchItem';
 
 export const GET_USER_QUERY = gql`
   query($email: String!) {

@@ -15,8 +15,8 @@ const GET_MY_FRIENDS_POSTS = gql`
       likesCount
       user {
         id
-        firstName
-        lastName
+        nickName
+        profilePicture
       }
     }
   }
@@ -27,7 +27,9 @@ const NewsFeed = () => (
     {({ loading, error, data }) => {
       if (loading) return 'Loading ...';
       if (error) return 'Error';
-
+      console.log('====================================');
+      console.log(data);
+      console.log('====================================');
       return <Feed> {data.getMyFriendsPosts.map(post => <Post key={post.id} post={post} />)}</Feed>;
     }}
   </Query>

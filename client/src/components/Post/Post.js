@@ -14,10 +14,12 @@ const Post = ({ post }) => (
       borderRadius: 5,
     }}
   >
-    <Feed.Label image={`https://api.adorable.io/avatars/132/${post.user.id}.png`} />
+    <Feed.Label
+      image={`http://127.0.0.1:4000/${post.user.profilePicture.replace('public/', '')}`}
+    />
     <Feed.Content>
       <Feed.Summary>
-        <a> {`${post.user.firstName}  ${post.user.lastName}`} </a>
+        <a> {post.user.nickName}</a>
         <Feed.Date> {distanceInWordsToNow(post.createdAt)} </Feed.Date>
       </Feed.Summary>
       <Feed.Extra text> {post.caption} </Feed.Extra>
@@ -34,7 +36,7 @@ const Post = ({ post }) => (
                 <Image
                   size="medium"
                   alt="pic"
-                  src={`http://localhost:4000/${post.imageUrl.replace('public/', '')}`}
+                  src={`http://127.0.0.1:4000/${post.imageUrl.replace('public/', '')}`}
                 />
               </a>
             }

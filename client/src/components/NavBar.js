@@ -23,8 +23,8 @@ const NavBar = ({ me, history }) => {
                   inputRef: { value },
                 },
               } = inputRef;
-              if (value.length > 0) {
-                history.push(`/search/${value}`);
+              if (value.trim().length > 0) {
+                history.push(`/search/${value.trim()}`);
                 inputRef.current.inputRef.value = '';
               }
             }}

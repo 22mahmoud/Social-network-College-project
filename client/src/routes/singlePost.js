@@ -16,6 +16,8 @@ const GET_POST_QUERY = gql`
         createdAt
         user {
           id
+          profilePicture
+          nickName
           firstName
           lastName
         }
@@ -44,7 +46,9 @@ const signlePost = ({
       {({ loading, error, data }) => {
         if (loading) return 'loading';
         if (error) return 'error';
-
+        console.log('====================================');
+        console.log(data);
+        console.log('====================================');
         return (
           <Feed>
             <Post post={data.getPost.post} />
