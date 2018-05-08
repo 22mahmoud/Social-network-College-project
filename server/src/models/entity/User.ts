@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   BaseEntity,
-  // PrimaryColumn,
   BeforeInsert,
   OneToMany,
   PrimaryColumn,
@@ -45,6 +44,29 @@ export class User extends BaseEntity {
   @Column({ type: "text" })
   password: string;
 
+  @Column({ type: "varchar", length: "250" })
+  nickName: string;
+
+  @IsNotEmpty()
+  @Column({ type: "varchar", length: "250" })
+  gender: string;
+
+  @IsNotEmpty()
+  @Column({ type: "date" })
+  birthDate: Date;
+
+  @Column({ type: "text" })
+  profilePicture: string;
+
+  @Column({ type: "varchar", length: "250" })
+  hometown: string;
+
+  @Column({ type: "varchar", length: "50" })
+  relationship: string;
+
+  @Column({ type: "text" })
+  aboutMe: string;
+
   @OneToMany(() => Post, post => post.user)
   posts: Post[];
 
@@ -60,7 +82,6 @@ export class User extends BaseEntity {
   @OneToMany(() => CommentPost, commentPost => commentPost.user)
   commentPost: CommentPost;
 
-  @BeforeUpdate()
   @BeforeInsert()
   hashPassword() {
     this.password = hashSync(this.password);
@@ -69,6 +90,14 @@ export class User extends BaseEntity {
   @BeforeInsert()
   addId() {
     this.id = uuidv4();
+  }
+
+  @BeforeUpdate()
+  @BeforeInsert()
+  setNickname() {
+    if (!this.nickName) {
+      this.nickName = `${this.firstName} ${this.lastName}`;
+    }
   }
 
   createToken() {

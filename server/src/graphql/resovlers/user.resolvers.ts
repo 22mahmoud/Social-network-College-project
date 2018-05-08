@@ -1,27 +1,47 @@
 import { User } from "../../models/entity/User";
 import { validate } from "class-validator";
 import { FriendRequest } from "../../models/entity/FriendRequest";
+import { hashSync } from "bcrypt-nodejs";
 import { getManager } from "typeorm";
+import { createWriteStream } from "fs";
+import * as mkdirp from "mkdirp";
+import shortid from "shortid";
+
+const uploadDir = "./public";
+mkdirp.sync(uploadDir);
 
 interface ErrorInterface {
   path: string;
   message: string;
 }
 
+const storeUpload = async ({ stream, filename }): Promise<any> => {
+  const id = shortid.generate();
+  const path = `${uploadDir}/${id}-${filename}`;
+
+  return new Promise((resolve, reject) =>
+    stream
+      .pipe(createWriteStream(path))
+      .on("finish", () => resolve({ id, path }))
+      .on("error", reject)
+  );
+};
+
+const processUpload = async upload => {
+  const { stream, filename } = await upload;
+  const { path } = await storeUpload({ stream, filename });
+
+  return path;
+};
+
 export default {
-  // User: {
-  //   posts: async parent => {
-  //     const posts = await getConnection().
-
-  //   }
-  // },
-
   Query: {
     me: async (_, __, ctx) => {
       if (!ctx.user) {
         return;
       }
       const me = await User.findOne(ctx.user.id);
+
       return me;
     },
 
@@ -33,12 +53,16 @@ export default {
             "fq.sender",
             "sender",
             "fq.isAccepted = :isAccepted",
-            { isAccepted: 0 }
+            { isAccepted: false }
           )
           .where("fq.receiver = :receiver", { receiver: ctx.user.id })
+          .select(["fq.id", "sender.email"])
           .getMany();
 
-        return friendRequets;
+        return friendRequets.map(fr => ({
+          id: fr.id,
+          senderEmail: fr.sender.email
+        }));
       } catch (error) {
         console.error(error);
         return;
@@ -47,6 +71,7 @@ export default {
     getUser: async (_, { email }, ctx) => {
       try {
         const user = await User.findOne({ email });
+
         if (!user) {
           return {
             errors: {
@@ -136,9 +161,15 @@ export default {
   },
 
   Mutation: {
-    signup: async (_, args) => {
+    signup: async (_, { profilePicture, ...args }) => {
       try {
-        const user = User.create(args);
+        const user = User.create({
+          profilePicture: profilePicture
+            ? await processUpload(profilePicture)
+            : null,
+          ...args
+        });
+
         const errors = await validate(user);
 
         if (errors.length > 0) {
@@ -206,6 +237,134 @@ export default {
           isOk: false
         };
       }
+    },
+    updateUserBasicInfo: async (_, args, ctx) => {
+      try {
+        const user = await User.findOne(args.id);
+        if (!user) {
+          return {
+            isOk: false
+          };
+        }
+        if (user.id !== ctx.user.id) {
+          return {
+            isOk: false
+          };
+        }
+
+        Object.keys(args).forEach(key => (user[key] = args[key]));
+        const errors = await validate(user);
+        if (errors.some(e => e.property !== "email")) {
+          if (errors.length > 0) {
+            const formatedErrors: ErrorInterface[] = [];
+            errors.map(error => {
+              if (error.property !== "email") {
+                formatedErrors.push({
+                  path: error.property,
+                  message: Object.values(error.constraints)[0]
+                });
+              }
+            });
+            return {
+              isOk: false,
+              errors: formatedErrors
+            };
+          }
+        }
+
+        await user.save();
+        return {
+          isOk: true,
+          user
+        };
+      } catch (error) {
+        return {
+          isOk: false
+        };
+      }
+    },
+    updateUserPassword: async (_, { newPassword, oldPassword, id }, ctx) => {
+      try {
+        const user = await User.findOne(id);
+        if (!user) {
+          return {
+            isOk: false
+          };
+        }
+        if (user.id !== ctx.user.id) {
+          return {
+            isOk: false
+          };
+        }
+
+        if (!user.authanticateUser(oldPassword)) {
+          return {
+            isOk: false,
+            errors: [
+              {
+                path: "old password",
+                message: "You entered wrong password "
+              }
+            ]
+          };
+        }
+
+        if (newPassword.length < 6) {
+          return {
+            isOk: false,
+            errors: [
+              {
+                path: "new password",
+                message: "password must be longer than or equal to 5 characters"
+              }
+            ]
+          };
+        }
+
+        user.password = hashSync(newPassword);
+        await user.save();
+        return {
+          isOk: true,
+          user
+        };
+      } catch (error) {
+        console.error(error);
+        return {
+          isOk: false
+        };
+      }
+    },
+    updateUserProfilePicture: async (_, { id, profilePicture }, ctx) => {
+      if (!profilePicture) {
+        return {
+          isOk: false,
+          errors: [
+            {
+              path: "profile Picture",
+              message: "please choose a photo!"
+            }
+          ]
+        };
+      }
+      const user = await User.findOne(id);
+      if (!user) {
+        return {
+          isOk: false
+        };
+      }
+
+      if (user.id !== ctx.user.id) {
+        return {
+          isOk: false
+        };
+      }
+
+      user.profilePicture = await processUpload(profilePicture);
+      await user.save();
+      return {
+        isOk: true,
+        user
+      };
     },
     sendFriendRequest: async (_, { userId }, ctx) => {
       try {

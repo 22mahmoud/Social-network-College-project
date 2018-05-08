@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-import SearchItem from '../components/Search/SearchItem';
+import SearchItem from '../components/User/SearchItem';
 import { GET_USER_QUERY } from './Search';
 
 const GET_FRIEND_REQUESTS_QUERY = gql`
@@ -15,7 +15,7 @@ const GET_FRIEND_REQUESTS_QUERY = gql`
 `;
 
 const FreindRequests = ({ me }) => (
-  <Query query={GET_FRIEND_REQUESTS_QUERY}>
+  <Query query={GET_FRIEND_REQUESTS_QUERY} fetchPolicy="network-only">
     {({ loading, error, data }) => {
       if (loading) return 'Loading..';
       if (error) return 'ERROR';

@@ -9,14 +9,8 @@ type Post {
   createdAt: Date!
 }
 
-type CustomUser {
-  id: String
-  firstName: String
-  lastName: String
-}
-
 type UserPost {
-  user: CustomUser
+  user: User
   likesCount: Int
   id: String
   imageUrl: String

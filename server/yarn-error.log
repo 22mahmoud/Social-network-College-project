@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
+  C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js dev
 
 PATH: 
-  C:\Users\Mahmoud\Downloads\Compressed\cmder\bin;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5;C:\Users\Mahmoud\Downloads\Compressed\cmder\vendor\conemu-maximus5\ConEmu;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk-9\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;"C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk-9\bin";F:\Programming\xampp\php;C:\composer;C:\Program Files\erl9.0\bin;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\Elixir/bin;C:\Program Files\PostgreSQL\10\bin;C:\Program Files\PostgreSQL\10\bin;C:\Users\Mahmoud\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files\Git\bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Amazon\AWSCLI\;C:\Users\Mahmoud\flutter\flutter\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\R\R-3.4.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Program Files (x86)\Yarn\bin;C:\Users\Mahmoud;C:\Users\Mahmoud\.cargo\bin;C:\Program Files (x86)\Elm Platform\0.18\bin;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32\;C:\Users\Mahmoud\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-9\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\Mahmoud\AppData\Roaming\Composer\vendor\bin;C:\Program Files\erl9.0\bin;C:\Users\Mahmoud\AppData\Roaming\npm;C:\Users\Mahmoud\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files\Git\bin;C:\tools\dart-sdk\bin;C:\Users\Mahmoud\AppData\Roaming\Pub\Cache\bin;C:\Program Files\Heroku\bin;C:\Users\Mahmoud\AppData\Local\Android\Sdk\platform-tools;C:\Users\Mahmoud\AppData\Local\Yarn\bin;C:\Program Files\R\R-3.4.4\bin;C:\Program Files (x86)\Oni;F:\Programming\xampp\mysql\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Local\hyper\app-2.0.0\resources\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Users\Mahmoud\Downloads\Compressed\cmder\
+  C:\Users\Mahmoud\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Mahmoud\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Java\jdk-9\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system3;C:\WINDOWS;C:\Program Files\Java\jdk-9\bin";F:\Programming\xampp\php;C:\composer;C:\Program Files\erl9.0\bin;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\Elixir\bin;C:\Program Files\PostgreSQL\10\bin;C:\Program Files\PostgreSQL\10\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Amazon\AWSCLI;C:\Users\Mahmoud\flutter\flutter\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\R\R-3.4.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Program Files (x86)\Yarn\bin;C:\Users\Mahmoud;C:\Program Files\Git\cmd;C:\Users\Mahmoud\.cargo\bin;C:\Program Files (x86)\Elm Platform\0.18\bin;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\Mahmoud\AppData\Local\Programs\Python\Python36-32;C:\Users\Mahmoud\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-9\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\Mahmoud\AppData\Roaming\Composer\vendor\bin;C:\Program Files\erl9.0\bin;C:\Users\Mahmoud\AppData\Roaming\npm;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node.exe;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0\node_modules\npm\bin;C:\Program Files\Git\usr\bin;C:\tools\dart-sdk\bin;C:\Users\Mahmoud\AppData\Roaming\Pub\Cache\bin;C:\Program Files\Heroku\bin;C:\Users\Mahmoud\AppData\Local\Android\Sdk\platform-tools;C:\Users\Mahmoud\AppData\Local\Yarn\bin;C:\Program Files\R\R-3.4.4\bin;C:\Program Files (x86)\Oni;F:\Programming\xampp\mysql\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Users\Mahmoud\AppData\Local\hyper\app-2.0.0\resources\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\Mahmoud\AppData\Roaming\nvm\v9.3.0;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.5.1
@@ -34,11 +34,13 @@ npm manifest:
     "dependencies": {
       "bcrypt-nodejs": "^0.0.3",
       "class-validator": "^0.8.5",
+      "express": "^4.16.3",
       "graphql-yoga": "^1.12.1",
       "jsonwebtoken": "^8.2.1",
       "merge-graphql-schemas": "^1.5.1",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.10",
+      "shortid": "^2.2.8",
       "typeorm": "0.2.0",
       "uuid": "^3.2.1"
     }
@@ -97,6 +99,10 @@ Lockfile:
       "@types/express-serve-static-core" "*"
       "@types/serve-static" "*"
   
+  "@types/graphql-deduplicator@^2.0.0":
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/@types/graphql-deduplicator/-/graphql-deduplicator-2.0.0.tgz#9e577b8f3feb3d067b0ca756f4a1fb356d533922"
+  
   "@types/graphql@0.12.6":
     version "0.12.6"
     resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
@@ -109,17 +115,13 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
   
-  "@types/node@*":
-    version "10.0.0"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.0.tgz#c40f8e07dce607d3ef25a626b93a6a7cdcf97881"
-  
-  "@types/node@^8.0.29":
-    version "8.10.10"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.10.tgz#fec07bc2ad549d9e6d2f7aa0fb0be3491b83163a"
+  "@types/node@*", "@types/node@^8.0.29":
+    version "8.10.11"
+    resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.11.tgz#971ea8cb91adbe0b74e3fbd867dec192d5893a5f"
   
   "@types/serve-static@*":
-    version "1.13.1"
-    resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.13.1.tgz#1d2801fa635d274cd97d4ec07e26b21b44127492"
+    version "1.13.2"
+    resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.13.2.tgz#f5ac4d7a6420a99a6a45af4719f4dcd8cd907a48"
     dependencies:
       "@types/express-serve-static-core" "*"
       "@types/mime" "*"
@@ -309,8 +311,8 @@ Lockfile:
       dotenv "^0.4.0"
   
   aws-sdk@^*:
-    version "2.229.1"
-    resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.229.1.tgz#6123c8acee0de534a0585e1375ee19c4de54a39e"
+    version "2.230.1"
+    resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.230.1.tgz#494cef6aed2e16db1ed9c12acf4bd2a7317f5365"
     dependencies:
       buffer "4.9.1"
       events "1.1.1"
@@ -1076,6 +1078,10 @@ Lockfile:
       lodash "^4.17.4"
       minimatch "^3.0.4"
   
+  graphql-deduplicator@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/graphql-deduplicator/-/graphql-deduplicator-2.0.1.tgz#20c6b39e3a6f096b46dfc8491432818739c0ee37"
+  
   graphql-extensions@^0.0.x, graphql-extensions@~0.0.9:
     version "0.0.10"
     resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.0.10.tgz#34bdb2546d43f6a5bc89ab23c295ec0466c6843d"
@@ -1142,12 +1148,13 @@ Lockfile:
       uuid "^3.1.0"
   
   graphql-yoga@^1.12.1:
-    version "1.12.1"
-    resolved "https://registry.yarnpkg.com/graphql-yoga/-/graphql-yoga-1.12.1.tgz#75959677f7fa9b391eb878fef64306ff346d0a7a"
+    version "1.13.1"
+    resolved "https://registry.yarnpkg.com/graphql-yoga/-/graphql-yoga-1.13.1.tgz#3e0ff7253726542ce419b37a7e24148ed6653a35"
     dependencies:
       "@types/cors" "^2.8.4"
       "@types/express" "^4.11.1"
       "@types/graphql" "^0.13.0"
+      "@types/graphql-deduplicator" "^2.0.0"
       "@types/zen-observable" "^0.5.3"
       apollo-server-express "^1.3.6"
       apollo-server-lambda "1.3.6"
@@ -1157,6 +1164,7 @@ Lockfile:
       cors "^2.8.4"
       express "^4.16.3"
       graphql "^0.11.0 || ^0.12.0 || ^0.13.0"
+      graphql-deduplicator "^2.0.1"
       graphql-import "^0.5.0"
       graphql-middleware "^1.1.0"
       graphql-playground-middleware-express "1.6.1"
@@ -2312,6 +2320,10 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   
+  shortid@^2.2.8:
+    version "2.2.8"
+    resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.8.tgz#033b117d6a2e975804f6f0969dbe7d3d0b355131"
+  
   signal-exit@^3.0.0, signal-exit@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
@@ -2562,8 +2574,8 @@ Lockfile:
       nopt "~1.0.10"
   
   ts-node@^6.0.0:
-    version "6.0.1"
-    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.0.1.tgz#e2dd65abcadae530d2b2109cfd19202ba9f90402"
+    version "6.0.2"
+    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.0.2.tgz#e132d530e53173bc6a8c21ea65f64d8b47bc573e"
     dependencies:
       arrify "^1.0.0"
       chalk "^2.3.0"
@@ -2907,7 +2919,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 3221225786
+  Exit code: 1
   Command: C:\Windows\system32\cmd.exe
   Arguments: /d /s /c nodemon --exec ts-node src/index.ts
   Directory: F:\Programming\Projects\social-network-database-class\server

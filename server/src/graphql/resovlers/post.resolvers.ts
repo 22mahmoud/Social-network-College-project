@@ -38,7 +38,7 @@ export default {
       try {
         const [post] = await getManager().query(
           `
-            SELECT  u.id as user_id, u.firstName, u.lastName,
+            SELECT  u.id as user_id, u.firstName, u.lastName, u.nickName, u.profilePicture,
             p.id as post_id, p.imageUrl, p.caption, p.createdAt, p.imageUrl
             FROM post as p
             INNER JOIN user AS u ON u.id = p.userId 
@@ -66,7 +66,9 @@ export default {
               user: {
                 id: post.user_id,
                 firstName: post.firstName,
-                lastName: post.lastName
+                lastName: post.lastName,
+                profilePicture: post.profilePicture,
+                nickName: post.nickName
               }
             }
           };
@@ -133,7 +135,7 @@ export default {
     // INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC
     getMyFriendsPosts: async (_, __, ctx) => {
       const posts = await getManager().query(
-        `SELECT u.id as user_id, u.firstName, u.lastName,
+        `SELECT u.id as user_id, u.profilePicture, u.nickName,
         p.id as post_id, p.imageUrl, p.caption, p.createdAt
         FROM user u
         INNER JOIN 
@@ -147,6 +149,9 @@ export default {
         [ctx.user.id, ctx.user.id, ctx.user.id]
       );
 
+      console.log("====================================");
+      console.log(posts);
+      console.log("====================================");
       return posts.map(post => ({
         id: post.post_id,
         caption: post.caption,
@@ -155,8 +160,8 @@ export default {
         likesCount: post.likesCount,
         user: {
           id: post.user_id,
-          firstName: post.firstName,
-          lastName: post.lastName
+          nickName: post.nickName,
+          profilePicture: post.profilePicture
         }
       }));
     }

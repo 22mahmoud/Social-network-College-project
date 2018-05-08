@@ -9,6 +9,7 @@ export default {
         const comments = await getManager()
           .createQueryBuilder(CommentPost, "cp")
           .leftJoinAndSelect("cp.user", "user")
+          .orderBy({ "cp.createdAt": "ASC" })
           .where("cp.post = :post", { post: postId })
           .getMany();
 
@@ -38,20 +39,21 @@ export default {
           throw new Error();
         }
 
-        const post = await CommentPost.create({
+        const comment = await CommentPost.create({
           user: ctx.user.id,
           content,
           post: postId
         }).save();
 
         return {
-          id: post.id,
+          id: comment.id,
           user: {
             id: ctx.user.id,
             firstName: ctx.user.firstName,
             lastName: ctx.user.lastName
           },
-          content: post.content
+          content: comment.content,
+          createdAt: comment.createdAt
         };
       } catch (error) {
         throw error;

@@ -3,12 +3,19 @@ type User {
   firstName: String!
   lastName: String!
   email: String!
+  birthDate: Date!
+  gender: String!
+  nickName: String
+  profilePicture: String
+  hometown: String
+  relationship: String
+  aboutMe: String
 }
 
 type GetUserPayload {
   id: String
-  firstName: String
-  lastName: String
+  nickName: String
+  profilePicture: String
   email: String
   youSent: Boolean
   heSent: Boolean
@@ -20,7 +27,7 @@ type GetUserPayload {
 
 type FriendRequest {
   id: String
-  sender: User
+  senderEmail: String
 }
 
 type Query {
@@ -34,24 +41,43 @@ type Query {
 type AuthPayload {
   isOk: Boolean!
   token: String
+  user: User
   errors: [Error]
 }
 
 type Mutation {
   signup(
-    password: String!
     firstName: String!
     lastName: String!
+    password: String!
     email: String!
+    birthDate: Date!
+    gender: String!
+    nickName: String
+    profilePicture: Upload
+    hometown: String
+    relationship: String
+    aboutMe: String
   ): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
   ######
-  updateUser(
+  updateUserBasicInfo(
+    id: String!
     firstName: String
     lastName: String
-    email: String
+    birthDate: Date
+    gender: String
+    nickName: String
+    hometown: String
+    relationship: String
+    aboutMe: String
+  ): AuthPayload
+  updateUserProfilePicture(id: String!, profilePicture: Upload): AuthPayload
+  updateUserPassword(
     id: String!
-  ): User!
+    oldPassword: String
+    newPassword: String
+  ): AuthPayload
   deleteUser(id: String!): Boolean
   ####
   sendFriendRequest(userId: String!): Boolean!

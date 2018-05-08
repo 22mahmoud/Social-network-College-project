@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Feed } from 'semantic-ui-react';
 
-import Post from './Post';
+import Post from '../components/Post/Post';
 
 const GET_MY_FRIENDS_POSTS = gql`
   query {
@@ -23,13 +23,10 @@ const GET_MY_FRIENDS_POSTS = gql`
 `;
 
 const NewsFeed = () => (
-  <Query query={GET_MY_FRIENDS_POSTS}>
+  <Query query={GET_MY_FRIENDS_POSTS} fetchPolicy="network-only">
     {({ loading, error, data }) => {
       if (loading) return 'Loading ...';
       if (error) return 'Error';
-      console.log('====================================');
-      console.log(data);
-      console.log('====================================');
       return <Feed> {data.getMyFriendsPosts.map(post => <Post key={post.id} post={post} />)}</Feed>;
     }}
   </Query>

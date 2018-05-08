@@ -8,7 +8,10 @@ export default {
     sendFriendRequest: isLoggedIn,
     acceptFriendRequest: isLoggedIn,
     likePostToggle: isLoggedIn,
-    commentPost: isLoggedIn
+    commentPost: isLoggedIn,
+    updateUserBasicInfo: isLoggedIn,
+    updateUserPassword: isLoggedIn,
+    updateUserProfilePicture: isLoggedIn
   },
   Query: {
     getPostComments: isLoggedIn,

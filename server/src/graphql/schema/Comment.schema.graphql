@@ -1,13 +1,8 @@
-type BasicUser {
-  id: String!
-  firstName: String!
-  lastName: String!
-}
-
 type Comment {
   id: String!
-  user: BasicUser!
+  user: User!
   content: String!
+  createdAt: Date!
 }
 
 type Query {

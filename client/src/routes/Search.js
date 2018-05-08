@@ -2,14 +2,14 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import SearchItem from '../components/Search/SearchItem';
+import SearchItem from '../components/User/SearchItem';
 
 export const GET_USER_QUERY = gql`
   query($email: String!) {
     getUser(email: $email) {
       id
-      firstName
-      lastName
+      nickName
+      profilePicture
       email
       youSent
       heSent

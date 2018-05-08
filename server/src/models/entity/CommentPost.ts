@@ -4,7 +4,8 @@ import {
   PrimaryColumn,
   BeforeInsert,
   ManyToOne,
-  Column
+  Column,
+  CreateDateColumn
 } from "typeorm";
 import uuidv4 from "uuid/v4";
 
@@ -17,6 +18,8 @@ export class CommentPost extends BaseEntity {
 
   @Column({ type: "text" })
   content: string;
+
+  @CreateDateColumn() createdAt: Date;
 
   @ManyToOne(() => Post, post => post.commentPost)
   post: Post;

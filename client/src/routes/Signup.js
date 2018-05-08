@@ -51,6 +51,7 @@ const Signup = ({ history }) => {
         justifyContent: 'center',
         minHeight: '100vh',
         margin: '0 auto',
+        padding: '5em 0 5em 0',
         alignItems: 'center',
         background: '#ebebeb',
       }}
@@ -235,6 +236,7 @@ const Signup = ({ history }) => {
                   />
                   <Form.Group widths="equal">
                     <Form.Button
+                      icon="cloud upload"
                       label="Profile Picture"
                       content="upload Image"
                       onClick={(e) => {

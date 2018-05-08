@@ -6,9 +6,10 @@ import PrivateRoute from './PrivateRoute';
 import Search from './Search';
 import signlePost from './singlePost';
 
-import NewsFeed from '../components/Post/NewsFeed';
+import NewsFeed from './NewsFeed';
 import NavBar from '../components/NavBar';
 import FreindRequests from './FreindRequests';
+import Settings from './Settings';
 
 const Home = ({ history, me }) => (
   <div
@@ -49,6 +50,11 @@ const Home = ({ history, me }) => (
               exact
               path="/search/:email"
               component={props => <Search {...props} me={me} />}
+            />
+            <PrivateRoute
+              exact
+              path="/settings"
+              component={props => <Settings {...props} me={me} />}
             />
           </Switch>
         </Container>

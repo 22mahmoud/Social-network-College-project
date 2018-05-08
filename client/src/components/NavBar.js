@@ -36,8 +36,21 @@ const NavBar = ({ me, history }) => {
         <Menu.Menu position="right">
           <Dropdown item icon="setting" simple>
             <Dropdown.Menu>
-              <Dropdown.Item>Friend Requests </Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  history.push('/friendRequests');
+                }}
+              >
+                Friend Requests
+              </Dropdown.Item>
+
+              <Dropdown.Item
+                onClick={() => {
+                  history.push('/settings');
+                }}
+              >
+                Settings
+              </Dropdown.Item>
               <Dropdown.Divider />
               <ApolloConsumer>
                 {client => (
