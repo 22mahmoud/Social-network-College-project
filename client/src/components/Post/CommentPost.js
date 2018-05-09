@@ -3,6 +3,7 @@ import { Form, Comment, Button } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { Query, ApolloConsumer } from 'react-apollo';
 import { distanceInWordsToNow } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 const GET_POST_COMMENT_QUERY = gql`
   query($postId: String!) {
@@ -10,8 +11,8 @@ const GET_POST_COMMENT_QUERY = gql`
       id
       user {
         id
-        firstName
-        lastName
+        nickName
+        profilePicture
       }
       content
       createdAt
@@ -26,8 +27,8 @@ const COMMENT_POST_MUTATION = gql`
       __typename
       user {
         id
-        firstName
-        lastName
+        nickName
+        profilePicture
       }
       content
       createdAt
@@ -57,16 +58,20 @@ class CommentPost extends React.Component {
                   {data.getPostComments.map((comment) => {
                     const {
                       id,
-                      user: { id: uid, firstName, lastName },
+                      user: { profilePicture, nickName, id: userId },
                       createdAt,
                       content,
                     } = comment;
 
                     return (
                       <Comment key={id}>
-                        <Comment.Avatar src={`https://api.adorable.io/avatars/132/${uid}.png`} />
+                        <Comment.Avatar
+                          src={`http://127.0.0.1:4000/${profilePicture.replace('public/', '')}`}
+                        />
                         <Comment.Content>
-                          <Comment.Author as="a">{`${firstName} ${lastName}`}</Comment.Author>
+                          <Comment.Author as="a">
+                            <Link to={{ pathname: `/profile/${userId}` }}> {nickName}</Link>
+                          </Comment.Author>
                           <Comment.Metadata>
                             <div>{distanceInWordsToNow(createdAt)}</div>
                           </Comment.Metadata>

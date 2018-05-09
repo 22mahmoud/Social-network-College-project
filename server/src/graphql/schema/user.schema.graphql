@@ -32,6 +32,7 @@ type FriendRequest {
 
 type Query {
   getUser(email: String!): GetUserPayload!
+  getProfile(id: String!): User
   getMyFriends: [User]!
   getMyFriendRequests: [FriendRequest]!
   me: User!
@@ -60,7 +61,6 @@ type Mutation {
     aboutMe: String
   ): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  ######
   updateUserBasicInfo(
     id: String!
     firstName: String

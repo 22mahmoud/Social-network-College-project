@@ -10,6 +10,7 @@ import NewsFeed from './NewsFeed';
 import NavBar from '../components/NavBar';
 import FreindRequests from './FreindRequests';
 import Settings from './Settings';
+import Profile from './Profile';
 
 const Home = ({ history, me }) => (
   <div
@@ -28,7 +29,7 @@ const Home = ({ history, me }) => (
     >
       <div
         style={{
-          gridColumn: '4/8',
+          gridColumn: '2/10',
           justifySelf: 'center',
           width: '100%',
         }}
@@ -56,6 +57,7 @@ const Home = ({ history, me }) => (
               path="/settings"
               component={props => <Settings {...props} me={me} />}
             />
+            <PrivateRoute exact path="/profile/:id" component={Profile} />
           </Switch>
         </Container>
       </div>

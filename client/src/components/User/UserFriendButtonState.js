@@ -22,7 +22,7 @@ const UserFriendButtonState = ({
     heSent, friendRequestId, eQuery, youSent, notYet, id, isFriend,
   },
 }) =>
-   (
+  console.log(isFriend, 'HE') || (
     <ApolloConsumer>
       {client => (
         <Card.Content extra>

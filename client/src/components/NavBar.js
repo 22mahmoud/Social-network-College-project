@@ -69,8 +69,13 @@ const NavBar = ({ me, history }) => {
             </Dropdown.Menu>
           </Dropdown>
 
-          <Menu.Item name="firstname" onClick={() => {}}>
-            {me.firstName}
+          <Menu.Item
+            name="nickname"
+            onClick={() => {
+              history.push(`/profile/${me.id}`);
+            }}
+          >
+            {me.nickName}
           </Menu.Item>
           <Ctx.Consumer>
             {({ toggleModalState }) => (

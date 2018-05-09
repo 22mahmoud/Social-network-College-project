@@ -22,12 +22,16 @@ const GET_MY_FRIENDS_POSTS = gql`
   }
 `;
 
-const NewsFeed = () => (
+const NewsFeed = ({ history }) => (
   <Query query={GET_MY_FRIENDS_POSTS} fetchPolicy="network-only">
     {({ loading, error, data }) => {
       if (loading) return 'Loading ...';
       if (error) return 'Error';
-      return <Feed> {data.getMyFriendsPosts.map(post => <Post key={post.id} post={post} />)}</Feed>;
+      return (
+        <Feed>
+          {data.getMyFriendsPosts.map(post => <Post history={history} key={post.id} post={post} />)}
+        </Feed>
+      );
     }}
   </Query>
 );

@@ -94,6 +94,18 @@ export class User extends BaseEntity {
 
   @BeforeUpdate()
   @BeforeInsert()
+  addPhoto() {
+    if (!this.profilePicture) {
+      if (this.gender === "male") {
+        this.profilePicture = "./public/man.png";
+      } else {
+        this.profilePicture = "./public/woman.png";
+      }
+    }
+  }
+
+  @BeforeUpdate()
+  @BeforeInsert()
   setNickname() {
     if (!this.nickName) {
       this.nickName = `${this.firstName} ${this.lastName}`;

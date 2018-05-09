@@ -105,7 +105,9 @@ export default {
             user: {
               id: post.user_id,
               firstName: post.firstName,
-              lastName: post.lastName
+              lastName: post.lastName,
+              profilePicture: post.profilePicture,
+              nickName: post.nickName
             }
           }
         };
@@ -116,18 +118,79 @@ export default {
         };
       }
     },
-    getUserPosts: async (_, { userId }) => {
+    getUserPosts: async (_, { userId }, ctx) => {
       try {
-        const posts = await getManager()
-          .createQueryBuilder(Post, "post")
-          .select()
-          .where("post.user = :user", { user: userId })
-          .getMany();
+        const posts = await getManager().query(
+          `
+          SELECT  u.id as user_id,  u.nickName, u.profilePicture,
+          p.id as post_id, p.imageUrl, p.caption, p.createdAt
+          FROM post as p
+          INNER JOIN user AS u ON u.id = p.userId
+          WHERE u.id = ?
+        `,
+          userId
+        );
 
-        return posts;
+        if (userId === ctx.user.id) {
+          return posts.map(post => ({
+            isOk: true,
+            post: {
+              id: post.post_id,
+              caption: post.caption,
+              createdAt: post.createdAt,
+              likesCount: post.likesCount,
+              imageUrl: post.imageUrl,
+              user: {
+                id: post.user_id,
+                profilePicture: post.profilePicture,
+                nickName: post.nickName
+              }
+            }
+          }));
+        }
+
+        const users = await getManager().query(
+          `SELECT *
+          FROM user u
+          INNER JOIN 
+          (
+            SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
+            FROM friend_request AS fq
+            WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
+          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
+          `,
+          [ctx.user.id, ctx.user.id, ctx.user.id]
+        );
+
+        if (!users.some(user => user.id === userId)) {
+          return [
+            {
+              isOk: false,
+              errors: [{ path: "posts", message: "posts not found" }]
+            }
+          ];
+        }
+
+        return posts.map(post => ({
+          isOk: true,
+          post: {
+            id: post.post_id,
+            caption: post.caption,
+            createdAt: post.createdAt,
+            likesCount: post.likesCount,
+            imageUrl: post.imageUrl,
+            user: {
+              id: post.user_id,
+              profilePicture: post.profilePicture,
+              nickName: post.nickName
+            }
+          }
+        }));
       } catch (error) {
         console.error(error);
-        return;
+        return {
+          isOk: false
+        };
       }
     },
     // u.id as user_id, u.firstName, u.lastName,

@@ -24,6 +24,7 @@ export default {
     getMyFriends: isLoggedIn,
     getUser: isLoggedIn,
     getMyFriendRequests: isLoggedIn,
-    getMyFriendsPosts: isLoggedIn
+    getMyFriendsPosts: isLoggedIn,
+    getProfile: isLoggedIn
   }
 };

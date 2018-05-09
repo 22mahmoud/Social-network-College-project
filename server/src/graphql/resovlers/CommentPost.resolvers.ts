@@ -49,8 +49,8 @@ export default {
           id: comment.id,
           user: {
             id: ctx.user.id,
-            firstName: ctx.user.firstName,
-            lastName: ctx.user.lastName
+            nickName: ctx.user.nickName,
+            profilePicture: ctx.user.profilePicture
           },
           content: comment.content,
           createdAt: comment.createdAt

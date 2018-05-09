@@ -32,12 +32,15 @@ type getPostPayload {
 
 type Query {
   getPost(postId: String!): getPostPayload!
-  getUserPosts(userId: String!): [Post]!
+  getUserPosts(userId: String!): [getPostPayload]!
   getMyFriendsPosts: [UserPost]!
 }
 
 type Mutation {
-  createPost(image: Upload, caption: String!): PostPayload!
+  createPost(
+    image: Upload
+    caption: String! # isPrivate: Boolean! = false
+  ): PostPayload!
   updatePost(imageUrl: String, caption: String, postId: Int!): PostPayload!
   deletePost(postId: String!): PostPayload!
 }

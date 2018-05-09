@@ -16,10 +16,8 @@ const GET_POST_QUERY = gql`
         createdAt
         user {
           id
-          profilePicture
           nickName
-          firstName
-          lastName
+          profilePicture
         }
       }
       errors {
@@ -31,6 +29,7 @@ const GET_POST_QUERY = gql`
 `;
 
 const signlePost = ({
+  history,
   match: {
     params: { id },
   },
@@ -46,12 +45,25 @@ const signlePost = ({
       {({ loading, error, data }) => {
         if (loading) return 'loading';
         if (error) return 'error';
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
+        if (data.getPost.errors && data.getPost.errors[0].path === 'post') {
+          return (
+            <Feed>
+              <Feed.Event
+                style={{
+                  padding: '30px',
+                  marginBottom: '10px',
+                  backgroundColor: '#fff',
+                  borderRadius: 5,
+                }}
+              >
+                <h1> {data.getPost.errors[0].message} </h1>
+              </Feed.Event>
+            </Feed>
+          );
+        }
         return (
           <Feed>
-            <Post post={data.getPost.post} />
+            <Post post={data.getPost.post} history={history} />
           </Feed>
         );
       }}

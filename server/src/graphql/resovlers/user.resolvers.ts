@@ -45,6 +45,18 @@ export default {
       return me;
     },
 
+    getProfile: async (_, { id }) => {
+      try {
+        const user = await User.findOne(id);
+        if (!user) {
+          throw new Error();
+        }
+
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    },
     getMyFriendRequests: async (_, __, ctx) => {
       try {
         const friendRequets = await getManager()

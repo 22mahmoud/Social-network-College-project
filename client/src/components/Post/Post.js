@@ -1,11 +1,11 @@
 import React from 'react';
 import { Feed, Icon, Modal, Image } from 'semantic-ui-react';
 import { distanceInWordsToNow } from 'date-fns';
-
+import { Link } from 'react-router-dom';
 import LikePost from './LikePost';
 import CommentPost from './CommentPost';
 
-const Post = ({ post }) =>
+const Post = ({ post, history }) =>
   console.log('POST', post) || (
     <Feed.Event
       style={{
@@ -20,8 +20,10 @@ const Post = ({ post }) =>
       />
       <Feed.Content>
         <Feed.Summary>
-          <a> {post.user.nickName}</a>
-          <Feed.Date> {distanceInWordsToNow(post.createdAt)} </Feed.Date>
+          <Link to={{ pathname: `/profile/${post.user.id}` }}> {post.user.nickName}</Link>
+          <Feed.Date onClick={() => history.push(`/post/${post.id}`)} style={{ cursor: 'pointer' }}>
+            {distanceInWordsToNow(post.createdAt)}
+          </Feed.Date>
         </Feed.Summary>
         <Feed.Extra text> {post.caption} </Feed.Extra>
         {post.imageUrl && (
@@ -35,7 +37,7 @@ const Post = ({ post }) =>
               trigger={
                 <a>
                   <Image
-                    size="medium"
+                    size="small"
                     alt="pic"
                     src={`http://127.0.0.1:4000/${post.imageUrl.replace('public/', '')}`}
                   />
