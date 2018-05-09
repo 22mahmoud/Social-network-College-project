@@ -5,6 +5,8 @@ import { Query, ApolloConsumer } from 'react-apollo';
 import { distanceInWordsToNow } from 'date-fns';
 import { Link } from 'react-router-dom';
 
+import { GET_POST_COMMENTS_COUNT_QUERY } from './Post';
+
 const GET_POST_COMMENT_QUERY = gql`
   query($postId: String!) {
     getPostComments(postId: $postId) {
@@ -109,6 +111,23 @@ class CommentPost extends React.Component {
                       },
                       data: {
                         getPostComments: [...getPostComments, commentPost],
+                      },
+                    });
+
+                    const { getPostCommentsCount } = cache.readQuery({
+                      query: GET_POST_COMMENTS_COUNT_QUERY,
+                      variables: {
+                        postId,
+                      },
+                    });
+
+                    cache.writeQuery({
+                      query: GET_POST_COMMENTS_COUNT_QUERY,
+                      variables: {
+                        postId,
+                      },
+                      data: {
+                        getPostCommentsCount: getPostCommentsCount + 1,
                       },
                     });
                   },
