@@ -11,19 +11,16 @@ import {
 import { IsNotEmpty } from "class-validator";
 import uuidv4 from "uuid/v4";
 
-import { User } from "./User";
-import { LikePost } from "./LikePost";
-import { CommentPost } from "./CommentPost";
+import User from "../User/User.entity";
+import LikePost from "../LikePost/LikePost.entity";
+import CommentPost from "../CommentPost/CommentPost.entity";
 
 @Entity()
-export class Post extends BaseEntity {
+export default class Post extends BaseEntity {
   @PrimaryColumn("uuid") id: string;
 
   @Column({ default: null, type: "varchar", length: "200" })
   imageUrl: string;
-
-  @Column({ type: "tinyint", default: false })
-  isPrivate: boolean;
 
   @IsNotEmpty()
   @Column({ type: "text" })

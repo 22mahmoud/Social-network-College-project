@@ -7,11 +7,11 @@ import {
 } from "typeorm";
 import uuidv4 from "uuid/v4";
 
-import { User } from "./User";
-import { Post } from "./Post";
+import Post from "../Post/Post.entity";
+import User from "../User/User.entity";
 
 @Entity()
-export class LikePost extends BaseEntity {
+export default class LikePost extends BaseEntity {
   @PrimaryColumn("uuid") id: string;
 
   @ManyToOne(() => Post, post => post.likePost)

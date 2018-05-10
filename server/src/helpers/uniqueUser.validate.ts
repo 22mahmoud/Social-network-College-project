@@ -4,7 +4,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from "class-validator";
-import { User } from "../models/entity/User";
+import User from "../modules/User/User.entity";
 
 @ValidatorConstraint({ async: true })
 export class UniqueConstraint implements ValidatorConstraintInterface {

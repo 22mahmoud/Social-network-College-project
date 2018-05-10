@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import constants from "../config/constants";
-import { User } from "../models/entity/User";
+
+import User from "../modules/User/User.entity";
 
 export const isLoggedIn = async (resolve, _, __, ctx) => {
   try {

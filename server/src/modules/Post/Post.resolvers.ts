@@ -3,8 +3,8 @@ import { createWriteStream } from "fs";
 import * as mkdirp from "mkdirp";
 import shortid from "shortid";
 
-import { Post } from "../../models/entity/Post";
 import { validate } from "class-validator";
+import Post from "./Post.entity";
 const uploadDir = "./public";
 mkdirp.sync(uploadDir);
 

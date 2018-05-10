@@ -1,6 +1,18 @@
-import { isLoggedIn } from "../../services/auth.service";
+import * as path from "path";
+import { mergeResolvers, fileLoader, mergeTypes } from "merge-graphql-schemas";
+import { isLoggedIn } from "../services/auth.service";
 
-export default {
+const resolversArray = fileLoader(path.join(__dirname, "./**/*.resolvers.*"));
+const typesArray = fileLoader(path.join(__dirname, "./**/*.schema.*"));
+
+export const typeDefs = mergeTypes(typesArray);
+export const resolvers = mergeResolvers(resolversArray);
+
+console.log("====================================");
+console.log(typesArray);
+console.log("====================================");
+
+export const permissions = {
   Mutation: {
     createPost: isLoggedIn,
     updatePost: isLoggedIn,

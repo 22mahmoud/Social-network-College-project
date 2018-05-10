@@ -8,10 +8,10 @@ import {
 } from "typeorm";
 import uuidv4 from "uuid/v4";
 
-import { User } from "./User";
+import User from "./User.entity";
 
 @Entity()
-export class FriendRequest extends BaseEntity {
+export default class FriendRequest extends BaseEntity {
   @PrimaryColumn() id: string;
 
   @ManyToOne(() => User, user => user.requestsSent)

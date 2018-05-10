@@ -9,11 +9,11 @@ import {
 } from "typeorm";
 import uuidv4 from "uuid/v4";
 
-import { User } from "./User";
-import { Post } from "./Post";
+import Post from "../Post/Post.entity";
+import User from "../User/User.entity";
 
 @Entity()
-export class CommentPost extends BaseEntity {
+export default class CommentPost extends BaseEntity {
   @PrimaryColumn("uuid") id: string;
 
   @Column({ type: "text" })

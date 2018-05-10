@@ -1,10 +1,8 @@
 import { GraphQLServer } from "graphql-yoga";
 import * as express from "express";
 
-import resolvers from "./graphql/resovlers";
-import typeDefs from "./graphql/schema";
+import { permissions, resolvers, typeDefs } from "./modules";
 import constants from "./config/constants";
-import permissions from "./graphql/middlewares/permissions";
 import "./config/db";
 
 const options = {

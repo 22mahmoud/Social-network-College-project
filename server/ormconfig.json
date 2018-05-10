@@ -7,9 +7,7 @@
   "database": "social",
   "synchronize": true,
   "logging": "all",
-  "entities": ["src/models/entity/**/*.ts"],
-  "migrations": ["src/models/migration/**/*.ts"],
-  "subscribers": ["src/models/subscriber/**/*.ts"],
+  "entities": ["src/modules/**/*.entity.ts"],
   "cli": {
     "entitiesDir": "src/entity",
     "migrationsDir": "src/migration",

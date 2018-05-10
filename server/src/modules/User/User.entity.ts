@@ -14,13 +14,13 @@ import uuidv4 from "uuid/v4";
 
 import { Unique } from "../../helpers/uniqueUser.validate";
 import constants from "../../config/constants";
-import { Post } from "./Post";
-import { FriendRequest } from "./FriendRequest";
-import { LikePost } from "./LikePost";
-import { CommentPost } from "./CommentPost";
+import FriendRequest from "./FriendRequest.entity";
+import LikePost from "../LikePost/LikePost.entity";
+import CommentPost from "../CommentPost/CommentPost.entity";
+import Post from "../Post/Post.entity";
 
 @Entity()
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryColumn("uuid") id: string;
 
   @IsEmail()
@@ -92,7 +92,6 @@ export class User extends BaseEntity {
     this.id = uuidv4();
   }
 
-  @BeforeUpdate()
   @BeforeInsert()
   addPhoto() {
     if (!this.profilePicture) {

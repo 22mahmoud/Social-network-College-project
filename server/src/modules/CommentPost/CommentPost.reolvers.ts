@@ -1,6 +1,6 @@
-import { Post } from "../../models/entity/Post";
-import { CommentPost } from "../../models/entity/CommentPost";
 import { getManager } from "typeorm";
+import CommentPost from "./CommentPost.entity";
+import Post from "../Post/Post.entity";
 
 export default {
   Query: {

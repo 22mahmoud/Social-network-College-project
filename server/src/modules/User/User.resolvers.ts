@@ -1,11 +1,12 @@
-import { User } from "../../models/entity/User";
 import { validate } from "class-validator";
-import { FriendRequest } from "../../models/entity/FriendRequest";
 import { hashSync } from "bcrypt-nodejs";
 import { getManager } from "typeorm";
 import { createWriteStream } from "fs";
 import * as mkdirp from "mkdirp";
 import shortid from "shortid";
+
+import User from "./User.entity";
+import FriendRequest from "./FriendRequest.entity";
 
 const uploadDir = "./public";
 mkdirp.sync(uploadDir);
@@ -388,7 +389,7 @@ export default {
           throw new Error();
         }
 
-        const isExist = await getManager().query(
+        const [isExist] = await getManager().query(
           `SELECT *
             FROM friend_request AS fq
             WHERE ( fq.senderId = ? AND fq.receiverId = ? ) OR ( fq.senderId = ? AND fq.receiverId = ?  )
@@ -396,7 +397,7 @@ export default {
           [ctx.user.id, userId, userId, ctx.user.id]
         );
 
-        if (isExist.length >= 1) {
+        if (isExist) {
           throw new Error();
         }
 

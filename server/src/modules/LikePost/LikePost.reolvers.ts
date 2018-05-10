@@ -1,5 +1,6 @@
-import { LikePost } from "../../models/entity/LikePost";
 import { getManager } from "typeorm";
+
+import LikePost from "./LikePost.entity";
 
 export default {
   Query: {
@@ -28,10 +29,10 @@ export default {
         );
 
         if (likes.some(elm => elm.userId === ctx.user.id)) {
-          return {Liked: true};
+          return { Liked: true };
         }
 
-        return {Liked: false};
+        return { Liked: false };
       } catch (error) {
         console.error(error);
         return;
