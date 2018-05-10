@@ -25,18 +25,10 @@ type GetUserPayload {
   errors: Error
 }
 
-type FriendRequest {
-  id: String
-  senderEmail: String
-}
-
 type Query {
   getUser(email: String!): GetUserPayload!
   getProfile(id: String!): User
-  getMyFriends: [User]!
-  getMyFriendRequests: [FriendRequest]!
   me: User!
-  hello: String!
 }
 
 type AuthPayload {
@@ -80,6 +72,4 @@ type Mutation {
   ): AuthPayload
   deleteUser(id: String!): Boolean
   ####
-  sendFriendRequest(userId: String!): Boolean!
-  acceptFriendRequest(friendRequestId: String!): Boolean!
 }

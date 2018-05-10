@@ -14,10 +14,10 @@ import uuidv4 from "uuid/v4";
 
 import { Unique } from "../../utils/uniqueUser.validate";
 import constants from "../../config/constants";
-import FriendRequest from "./FriendRequest.entity";
 import LikePost from "../LikePost/LikePost.entity";
 import CommentPost from "../CommentPost/CommentPost.entity";
 import Post from "../Post/Post.entity";
+import FriendRequest from "../FriendRequest/FriendReques.entity";
 
 @Entity()
 export default class User extends BaseEntity {

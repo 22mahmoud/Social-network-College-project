@@ -1,0 +1,14 @@
+type FriendRequest {
+  id: String
+  senderEmail: String
+}
+
+type Query {
+  getMyFriends: [User]!
+  getMyFriendRequests: [FriendRequest]!
+}
+
+type Mutation {
+  sendFriendRequest(userId: String!): Boolean!
+  acceptFriendRequest(friendRequestId: String!): Boolean!
+}

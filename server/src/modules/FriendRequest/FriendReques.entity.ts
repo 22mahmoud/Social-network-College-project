@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import uuidv4 from "uuid/v4";
 
-import User from "./User.entity";
+import User from "../User/User.entity";
 
 @Entity()
 export default class FriendRequest extends BaseEntity {
