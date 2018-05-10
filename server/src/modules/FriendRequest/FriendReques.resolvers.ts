@@ -1,28 +1,15 @@
 import { getManager } from "typeorm";
 import FriendRequest from "./FriendReques.entity";
 import User from "../User/User.entity";
+import getMyFriendsList from "../../helpers/getMyFriends";
 
 export default {
   Query: {
     getMyFriends: async (_, __, ctx) => {
       try {
-        /*
-          Get My friend from Freind_request Table
-        */
-        const users = await getManager().query(
-          `SELECT *
-          FROM user u
-          INNER JOIN 
-          (
-          SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
-          FROM friend_request AS fq
-          WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
-          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
-          `,
-          [ctx.user.id, ctx.user.id, ctx.user.id]
-        );
+        const friends = await getMyFriendsList(ctx.user.id);
 
-        return users;
+        return friends;
       } catch (error) {
         console.error(error);
         return;

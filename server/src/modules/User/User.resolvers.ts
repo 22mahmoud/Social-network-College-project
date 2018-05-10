@@ -181,8 +181,11 @@ export default {
           };
         }
 
-        Object.keys(args).forEach(key => (user[key] = args[key]));
-        const errors = await validate(args);
+        Object.keys(args).forEach(key => {
+          user[key] = args[key];
+        });
+
+        const errors = await validate(user);
 
         if (errors.length > 0) {
           return {

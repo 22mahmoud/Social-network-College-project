@@ -4,7 +4,6 @@ import Post from "../Post/Post.entity";
 
 export default {
   Query: {
-    helloWorld: () => "HELLO",
     getPostComments: async (_, { postId }) => {
       try {
         const comments = await getManager()

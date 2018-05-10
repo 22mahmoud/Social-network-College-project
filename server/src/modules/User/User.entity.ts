@@ -12,12 +12,12 @@ import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
 import * as jwt from "jsonwebtoken";
 import uuidv4 from "uuid/v4";
 
-import { Unique } from "../../utils/uniqueUser.validate";
 import constants from "../../config/constants";
 import LikePost from "../LikePost/LikePost.entity";
 import CommentPost from "../CommentPost/CommentPost.entity";
 import Post from "../Post/Post.entity";
 import FriendRequest from "../FriendRequest/FriendReques.entity";
+import { Unique } from "../../utils/uniqueUser.validate";
 
 @Entity()
 export default class User extends BaseEntity {
@@ -28,7 +28,10 @@ export default class User extends BaseEntity {
   @Unique({
     message: "$value already exists. Choose another email."
   })
-  @Column({ type: "varchar", unique: true, length: "200" })
+  @Column({
+    type: "varchar",
+    length: "200"
+  })
   email: string;
 
   @IsNotEmpty()
