@@ -4,12 +4,8 @@ import { getManager } from "typeorm";
 
 import User from "./User.entity";
 import FriendRequest from "./FriendRequest.entity";
-import processUpload from "../../helpers/uploadFiles";
-
-interface ErrorInterface {
-  path: string;
-  message: string;
-}
+import processUpload from "../../utils/uploadFiles";
+import FormatErrors from "../../helpers/FormatErrors";
 
 export default {
   Query: {
@@ -162,17 +158,9 @@ export default {
         const errors = await validate(user);
 
         if (errors.length > 0) {
-          const formatedErrors: ErrorInterface[] = [];
-          errors.forEach(error => {
-            formatedErrors.push({
-              path: error.property,
-              message: Object.values(error.constraints)[0]
-            });
-          });
-
           return {
             isOk: false,
-            errors: formatedErrors
+            errors: FormatErrors(errors)
           };
         }
 
@@ -242,23 +230,13 @@ export default {
         }
 
         Object.keys(args).forEach(key => (user[key] = args[key]));
-        const errors = await validate(user);
-        if (errors.some(e => e.property !== "email")) {
-          if (errors.length > 0) {
-            const formatedErrors: ErrorInterface[] = [];
-            errors.map(error => {
-              if (error.property !== "email") {
-                formatedErrors.push({
-                  path: error.property,
-                  message: Object.values(error.constraints)[0]
-                });
-              }
-            });
-            return {
-              isOk: false,
-              errors: formatedErrors
-            };
-          }
+        const errors = await validate(args);
+
+        if (errors.length > 0) {
+          return {
+            isOk: false,
+            errors: FormatErrors(errors)
+          };
         }
 
         await user.save();

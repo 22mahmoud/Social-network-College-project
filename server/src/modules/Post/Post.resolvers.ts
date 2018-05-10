@@ -1,13 +1,9 @@
 import { getManager } from "typeorm";
-
 import { validate } from "class-validator";
-import Post from "./Post.entity";
-import processUpload from "../../helpers/uploadFiles";
 
-interface ErrorInterface {
-  path: string;
-  message: string;
-}
+import Post from "./Post.entity";
+import processUpload from "../../utils/uploadFiles";
+import FormatErrors from "../../helpers/FormatErrors";
 
 export default {
   Query: {
@@ -216,19 +212,12 @@ export default {
         });
         const errors = await validate(post);
         if (errors.length > 0) {
-          const formatedErrors: ErrorInterface[] = [];
-          errors.forEach(error => {
-            formatedErrors.push({
-              path: error.property,
-              message: Object.values(error.constraints)[0]
-            });
-          });
-
           return {
             isOk: false,
-            errors: formatedErrors
+            errors: FormatErrors(errors)
           };
         }
+
         await post.save();
         return {
           isOk: true,

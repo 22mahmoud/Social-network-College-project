@@ -12,7 +12,7 @@ import { IsNotEmpty, IsEmail, MinLength } from "class-validator";
 import * as jwt from "jsonwebtoken";
 import uuidv4 from "uuid/v4";
 
-import { Unique } from "../../helpers/uniqueUser.validate";
+import { Unique } from "../../utils/uniqueUser.validate";
 import constants from "../../config/constants";
 import FriendRequest from "./FriendRequest.entity";
 import LikePost from "../LikePost/LikePost.entity";

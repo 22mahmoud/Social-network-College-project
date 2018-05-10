@@ -8,10 +8,6 @@ const typesArray = fileLoader(path.join(__dirname, "./**/*.schema.*"));
 export const typeDefs = mergeTypes(typesArray);
 export const resolvers = mergeResolvers(resolversArray);
 
-console.log("====================================");
-console.log(typesArray);
-console.log("====================================");
-
 export const permissions = {
   Mutation: {
     createPost: isLoggedIn,
