@@ -4,21 +4,17 @@ import { validate } from "class-validator";
 import Post from "./Post.entity";
 import processUpload from "../../utils/uploadFiles";
 import FormatErrors from "../../helpers/FormatErrors";
+import getMyFriendsList from "../../helpers/getMyFriends";
 
 export default {
   Query: {
     getPost: async (_, { postId }, ctx) => {
       try {
-        const [post] = await getManager().query(
-          `
-            SELECT  u.id as user_id, u.firstName, u.lastName, u.nickName, u.profilePicture,
-            p.id as post_id, p.imageUrl, p.caption, p.createdAt, p.imageUrl
-            FROM post as p
-            INNER JOIN user AS u ON u.id = p.userId 
-            WHERE p.id = ?
-          `,
-          [postId]
-        );
+        const post = await getManager()
+          .createQueryBuilder(Post, "post")
+          .innerJoinAndSelect("post.user", "user")
+          .where("post.id = :id", { id: postId })
+          .getOne();
 
         if (!post) {
           return {
@@ -27,40 +23,16 @@ export default {
           };
         }
 
-        if (post.user_id === ctx.user.id) {
+        if (post.user.id === ctx.user.id) {
           return {
             isOk: true,
-            post: {
-              id: post.post_id,
-              caption: post.caption,
-              createdAt: post.createdAt,
-              likesCount: post.likesCount,
-              imageUrl: post.imageUrl,
-              user: {
-                id: post.user_id,
-                firstName: post.firstName,
-                lastName: post.lastName,
-                profilePicture: post.profilePicture,
-                nickName: post.nickName
-              }
-            }
+            post
           };
         }
 
-        const myFriends = await getManager().query(
-          `SELECT u.id AS user_id
-          FROM user u
-          INNER JOIN 
-          (
-          SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
-          FROM friend_request AS fq
-          WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
-          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
-          `,
-          [ctx.user.id, ctx.user.id, ctx.user.id]
-        );
+        const myFriends = await getMyFriendsList(ctx.user.id);
 
-        if (!myFriends.some(friend => friend.id === post.userId)) {
+        if (!myFriends.some(friend => friend.user === post.user.id)) {
           return {
             isOk: false,
             errors: [{ path: "post", message: "post not found" }]
@@ -69,20 +41,7 @@ export default {
 
         return {
           isOk: true,
-          post: {
-            id: post.post_id,
-            caption: post.caption,
-            imageUrl: post.imageUrl,
-            createdAt: post.createdAt,
-            likesCount: post.likesCount,
-            user: {
-              id: post.user_id,
-              firstName: post.firstName,
-              lastName: post.lastName,
-              profilePicture: post.profilePicture,
-              nickName: post.nickName
-            }
-          }
+          post
         };
       } catch (error) {
         console.error(error);
@@ -91,51 +50,24 @@ export default {
         };
       }
     },
+
     getUserPosts: async (_, { userId }, ctx) => {
       try {
-        const posts = await getManager().query(
-          `
-          SELECT  u.id as user_id,  u.nickName, u.profilePicture,
-          p.id as post_id, p.imageUrl, p.caption, p.createdAt
-          FROM post as p
-          INNER JOIN user AS u ON u.id = p.userId
-          WHERE u.id = ?
-        `,
-          userId
-        );
+        const posts = await getManager()
+          .createQueryBuilder(Post, "post")
+          .leftJoinAndSelect("post.user", "user")
+          .where("user.id = :userId", { userId })
+          .getMany();
 
         if (userId === ctx.user.id) {
           return posts.map(post => ({
             isOk: true,
-            post: {
-              id: post.post_id,
-              caption: post.caption,
-              createdAt: post.createdAt,
-              likesCount: post.likesCount,
-              imageUrl: post.imageUrl,
-              user: {
-                id: post.user_id,
-                profilePicture: post.profilePicture,
-                nickName: post.nickName
-              }
-            }
+            post
           }));
         }
 
-        const users = await getManager().query(
-          `SELECT *
-          FROM user u
-          INNER JOIN 
-          (
-            SELECT fq.senderId as sender_id, fq.receiverId as receiver_id
-            FROM friend_request AS fq
-            WHERE (fq.senderId = ? OR fq.receiverId = ?) AND (fq.isAccepted = true)
-          ) a ON u.id <> ? AND (u.id = a.sender_id OR u.id = a.receiver_id) 
-          `,
-          [ctx.user.id, ctx.user.id, ctx.user.id]
-        );
-
-        if (!users.some(user => user.id === userId)) {
+        const myFriends = await getMyFriendsList(ctx.user.id);
+        if (!myFriends.some(friend => friend.user === userId)) {
           return [
             {
               isOk: false,
@@ -146,18 +78,7 @@ export default {
 
         return posts.map(post => ({
           isOk: true,
-          post: {
-            id: post.post_id,
-            caption: post.caption,
-            createdAt: post.createdAt,
-            likesCount: post.likesCount,
-            imageUrl: post.imageUrl,
-            user: {
-              id: post.user_id,
-              profilePicture: post.profilePicture,
-              nickName: post.nickName
-            }
-          }
+          post
         }));
       } catch (error) {
         console.error(error);
@@ -166,9 +87,7 @@ export default {
         };
       }
     },
-    // u.id as user_id, u.firstName, u.lastName,
-    //     p.id as post_id, p.imageUrl, p.caption, p.createdAt
-    // INNER JOIN post p ON p.userId = u.id ORDER BY p.createdAt DESC
+
     getMyFriendsPosts: async (_, __, ctx) => {
       const posts = await getManager().query(
         `SELECT u.id as user_id, u.profilePicture, u.nickName,
@@ -185,9 +104,6 @@ export default {
         [ctx.user.id, ctx.user.id, ctx.user.id]
       );
 
-      console.log("====================================");
-      console.log(posts);
-      console.log("====================================");
       return posts.map(post => ({
         id: post.post_id,
         caption: post.caption,
@@ -202,6 +118,7 @@ export default {
       }));
     }
   },
+
   Mutation: {
     createPost: async (_, { caption, image }, ctx) => {
       try {
@@ -210,6 +127,7 @@ export default {
           imageUrl: image ? await processUpload(image) : null,
           user: ctx.user
         });
+
         const errors = await validate(post);
         if (errors.length > 0) {
           return {

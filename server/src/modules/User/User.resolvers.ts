@@ -143,6 +143,7 @@ export default {
             ]
           };
         }
+
         const passwordValid = user.authanticateUser(password);
         if (!passwordValid) {
           return {
@@ -161,7 +162,6 @@ export default {
           token: user.createToken()
         };
       } catch (error) {
-        console.error(error);
         return {
           isOk: false
         };
